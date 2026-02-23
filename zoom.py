@@ -4,7 +4,6 @@ import time
 import keyboard
 
 #I needed help from ChatGPT on how to use the windows magnification tool and how to get the monitor(s) info (resolution, oreintion)
-
 # Windows Magnification API (AI)
 magnification = ctypes.WinDLL("Magnification.dll") #Make sure to understand this part
 user32 = ctypes.windll.user32
@@ -17,10 +16,10 @@ magnification.MagSetFullscreenTransform.restype = wintypes.BOOL
 SCREEN_WIDTH = user32.GetSystemMetrics(0) #Make sure to understand this part
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
 
-#TODO add the option to choose which monitor (let user know that it is primary be default)
+#TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC
     
 #WHERE MY CODE STARTS
-#TODO add the option to choose which script to run? idrk its like 0 - previous, 1 - presets, 2 - edit presets or something. Then each of those will have more questions (add, remove, edit etc)
+#TODO code toggle and AWP (in their own files likely)
 
 def initialize_magnifier():
     magnification.MagInitialize() #AI
@@ -32,11 +31,11 @@ def set_centered_zoom(zoom_level: float): #Centers fullscreen magnifier regardle
     offset_y = int((SCREEN_HEIGHT - visible_height) / 2)
     magnification.MagSetFullscreenTransform(zoom_level, offset_x, offset_y) #AI assist
 
-#TODO make these actual user inputs... kind of idk how to explain but I'll remember!
-keyinput2 = 'F5' #keyinput1 = input('First Key')
-keyinputone = 'p' #keyinput2 = input('Second Key')
-zoominputone = 2 #zoominput1 = int(input("First Zoom Level"))
-zoominputtwo = 4 #zoominput2 = int(input("Second Zoom Level"))
+#TODO make these actual user inputs from the other file. Figure out a way for there to be as many as we want. 
+keyinput2 = 'F5'
+keyinputone = 'p' 
+zoominputone = 2 
+zoominputtwo = 4 
 
 initialize_magnifier()
 zoom_level = 1 #here because otherwise the if statements don't know what zoom_level means and would throw and error
