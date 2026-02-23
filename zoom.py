@@ -3,59 +3,63 @@ from ctypes import wintypes
 import time
 import keyboard
 
-# Windows Magnification API (NEEDED HELP FROM CHATGPT)
-magnification = ctypes.WinDLL("Magnification.dll")
+#I needed help from ChatGPT on how to use the windows magnification tool and how to get the monitor(s) info (resolution, oreintion)
+
+# Windows Magnification API (AI)
+magnification = ctypes.WinDLL("Magnification.dll") #Make sure to understand this part
 user32 = ctypes.windll.user32
 magnification.MagInitialize.restype = wintypes.BOOL
 magnification.MagUninitialize.restype = wintypes.BOOL
 magnification.MagSetFullscreenTransform.argtypes = [wintypes.FLOAT,wintypes.INT,wintypes.INT]
 magnification.MagSetFullscreenTransform.restype = wintypes.BOOL
 
-# Screen size (NEEDED HELP FROM CHATGPT)
-SCREEN_WIDTH = user32.GetSystemMetrics(0)
+# find screen size (AI)
+SCREEN_WIDTH = user32.GetSystemMetrics(0) #Make sure to understand this part
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
 
-def initialize_magnifier(): #(NEEDED HELP FROM CHATGPT)
-    if not magnification.MagInitialize():
-        raise RuntimeError("Failed to initialize magnifier")
+#TODO add the option to choose which monitor (let user know that it is primary be default)
     
 #WHERE MY CODE STARTS
+#TODO add the option to choose which script to run? idrk its like 0 - previous, 1 - presets, 2 - edit presets or something. Then each of those will have more questions (add, remove, edit etc)
 
-def set_centered_zoom(zoom_level: float):
-    #Centers fullscreen magnifier regardless of resolution.
+def initialize_magnifier():
+    magnification.MagInitialize() #AI
+
+def set_centered_zoom(zoom_level: float): #Centers fullscreen magnifier regardless of monitor resolution (always on whichever monitor is primary)
     visible_width = SCREEN_WIDTH / zoom_level
     visible_height = SCREEN_HEIGHT / zoom_level
-    offset_x = int((SCREEN_WIDTH - visible_width) / 2)
+    offset_x = int((SCREEN_WIDTH - visible_width) / 2) #Make sure to understand this part
     offset_y = int((SCREEN_HEIGHT - visible_height) / 2)
-    magnification.MagSetFullscreenTransform(zoom_level, offset_x, offset_y)
+    magnification.MagSetFullscreenTransform(zoom_level, offset_x, offset_y) #AI assist
 
-def reset_zoom():
-    magnification.MagSetFullscreenTransform(1.0, 0, 0)
+#TODO make these actual user inputs... kind of idk how to explain but I'll remember!
+keyinput2 = 'F5' #keyinput1 = input('First Key')
+keyinputone = 'p' #keyinput2 = input('Second Key')
+zoominputone = 2 #zoominput1 = int(input("First Zoom Level"))
+zoominputtwo = 4 #zoominput2 = int(input("Second Zoom Level"))
 
-def main():
-    initialize_magnifier()
-    print("Magnifier at 100%")
-    zoom_level = 1.0
-    while True:
-        # 4x zoom on 'F5' key
-        if keyboard.is_pressed("F5"):
-                zoom_level = 4.0
-                set_centered_zoom(zoom_level)
-                print("Magnifier set to 400%")
-
-        # 2x zoom on 'p' key
-        elif keyboard.is_pressed("p"):
-                zoom_level = 2.0
-                set_centered_zoom(zoom_level)
-                print("Magnifier set to 200%")
+initialize_magnifier()
+zoom_level = 1 #here because otherwise the if statements don't know what zoom_level means and would throw and error
+print("Magnifier at 1x")
+while True:
+    # 4x zoom on 'F5' key
+    if keyboard.is_pressed(keyinput2):
+        if zoom_level != zoominputtwo:
+            zoom_level = zoominputtwo #4x
+            set_centered_zoom(zoom_level)
+            print("Magnifier at " + str(zoom_level) + "x")
+            
+    # 2x zoom on 'p' key
+    elif keyboard.is_pressed(keyinputone):
+        if zoom_level != zoominputone:
+            zoom_level = zoominputone #2x
+            set_centered_zoom(zoom_level)
+            print("Magnifier at " + str(zoom_level) + "x")
                     
-        # reset when nothing held
-        else:
-            if zoom_level != 1.0:
-                zoom_level = 1.0
-                reset_zoom()
-                print("Magnifier reset to 100%")
-
-        time.sleep(0.05)
-        
-main()
+    # reset when nothing held
+    elif zoom_level != 1:
+        zoom_level = 1
+        set_centered_zoom(zoom_level)
+        print("Magnifier at 1x")
+            
+    time.sleep(0.05)
