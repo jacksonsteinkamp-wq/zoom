@@ -96,10 +96,10 @@ input("Press Enter to exit...") #so the python window doesn't close immediately 
 
 
 '''
-IDEAS FOR SHIT ASS .txt PRESET SETUP
-'Name' | 'number of keys' : ("Type of first key" : Keyboard Key : zoom level ) 
+The <> is the previous preset. 
+'Name' | 'number of keys' : ("Type of first key" : Keyboard Key : zoom level ) <>
 Example | 1 ( Toggle : p : 2.0)
-Example 2 | 2 ( Toggle : F5 : 4.0 )( Hold : p : 2.0)
+Example 2 | 2 ( Toggle : F5 : 4.0 )( Hold : p : 2.0) <>
 Example 3 | 1 (AWP : p : 2.0, 4.0)
-Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0)
+Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
 '''
