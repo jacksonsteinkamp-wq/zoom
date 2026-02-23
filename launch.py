@@ -144,3 +144,5 @@ Example 2 | 2 ( Toggle : F5 : 4.0 )( Hold : p : 2.0) <> #This is the most recent
 Example 3 | 1 (AWP : p : 2.0, 4.0)
 Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
 '''
+
+#TODO remove some functions (example remove preset), more files, library/definition?
