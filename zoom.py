@@ -16,13 +16,9 @@ magnification.MagSetFullscreenTransform.restype = wintypes.BOOL
 # find screen size (AI)
 SCREEN_WIDTH = user32.GetSystemMetrics(0) #Make sure to understand this part
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
-print(SCREEN_HEIGHT, SCREEN_WIDTH)
+print("Screen Width: " + str(SCREEN_WIDTH) + "\nScreen Height: " + str(SCREEN_HEIGHT))
     
 #WHERE MY CODE STARTS
-
-def initialize_magnifier():
-    magnification.MagInitialize() #AI
-
 def set_centered_zoom(zoom_level: float): #Centers fullscreen magnifier regardless of monitor resolution (always on whichever monitor is primary)
     visible_width = SCREEN_WIDTH / zoom_level
     visible_height = SCREEN_HEIGHT / zoom_level
@@ -37,7 +33,7 @@ zoominputone = 2
 zoominputtwo = 4 
 
 def main():
-    initialize_magnifier()
+    magnification.MagInitialize() #AI helped me understand this
     zoom_level = 1 #here because otherwise the if statements don't know what zoom_level means and would throw and error
     print("Magnifier at 1x")
     while True:
@@ -63,4 +59,4 @@ def main():
                 
         time.sleep(0.05)
         
-main() #TEMP 
+main() #TEMP (REMOVE WHEN RUNNING launch.py)

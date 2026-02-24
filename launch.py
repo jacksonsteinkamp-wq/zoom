@@ -3,17 +3,17 @@ global presetlist
 presetlist = []
 
 def clear(): #CHATGPT HELPED ME WITH THIS FUNCTION, I DIDNT KNOW HOW TO CLEAR THE TERMINAL
-    print("\033[2J\033[H", end="")
-    # print("Cleared terminal!") #Just for testing, to make sure it works. Will remove later. (WORKED)
+    #print("\033[2J\033[H", end="")
+    print("pretend I cleared here")
     
 def firstquestion():
-    #TODO find a way for me to clear this maybe idrk yet the reason I can't may just be for testing
+    clear()
     print("What would you like to do?")
     print("0 - Previous Setup")
     print("1 - Presets")
     print("2 - Edit Presets")
     print("3 - Exit")
-    return input("Enter the number of your choice: \n") #TODO make it onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
+    return input("Enter the number of your choice: \n") 
 
 def getpresets():
     presetlist.clear()
@@ -23,7 +23,6 @@ def getpresets():
     file.close()
     return presetlist
     
-    
 def select_Which_Preset_Edit_To_Do():
     clear()
     print("Choose an action:")
@@ -31,7 +30,7 @@ def select_Which_Preset_Edit_To_Do():
     print("1 - Remove a preset")
     print("2 - Edit a preset")
     print("3 - Go Back")
-    action = input("Enter the number of your choice: \n") #TODO if we have time, make it onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
+    action = input("Enter the number of your choice: \n")
     if action not in ['0', '1', '2', '3']:
         print("Invalid input, please enter a number from 0 to 3")
         return select_Which_Preset_Edit_To_Do()
@@ -66,11 +65,10 @@ def select_Which_Preset_Edit_To_Do():
     elif action == "3":
         print("Going back!") #Just so I remember what this is, too fast to see
         return 
-
-
     
 def runpreset(preset):
-    exit #TODO implement this (MAYBE)(HARD). Will definitely use other py file(s) for this. Include 'if None"
+    print("Not made yet")
+    #TODO implement this (MAYBE)(HARD). Will definitely use other py file(s) for this. Include 'if None"
     
 def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
     getpresets()
@@ -140,14 +138,8 @@ def main():
 presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
 
 
-main()
+main() #This code won't work unless the main() in zoom.py is gone
 input("Press Enter to close program...") #so the python window doesn't close immediately after running the script, allowing the user to see any output before exiting
-
-
-
-
-
-
 
 
 ''' NOTES
@@ -156,20 +148,18 @@ The <> is the marker of the previous preset.
 'Name' | 'number of keys' : ("Type of first key" : Keyboard Key : zoom level ) <>
 Example 1 | 1 ( Toggle : p : 2.0)
 Example 2 | 2 ( Toggle : F5 : 4.0 )( Hold : p : 2.0) <> #This is the most recently used file
-Example 3 | 1 (AWP : p : 2.0, 4.0)
+Example 3 | 1 (AWP : p : 2.0, 4.0) #It occurs to me that I could use the same AWP code for Toggle
 Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
-
-subprocess.run([sys.executable, "zoom.py"]) #used chatgpt #USE THIS
-
 
 #TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC
 #TODO code toggle and AWP (in their own files likely)
-#TODO if we have time, add option for crosshair adjusting (when not fullscreen)
+#TODO if we have time, add option for crosshair adjusting (in presets) (won't work across resolutions) (for when a game is not fullscreen, like minecraft or something)
 #TODO remove some functions (example remove preset), more files, library/definition?
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
 #TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
 #TODO make the text and clearing make sense again, I messed it up
+#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
 
-python.analysis.typeCheckingMode <-- I enabled
+python.analysis.typeCheckingMode <-- I enabled this setting on VSCode
 
 '''
