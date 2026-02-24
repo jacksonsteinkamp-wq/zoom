@@ -1,8 +1,4 @@
-1
-2
-  , 3
-12 123, 123asd
-3
-a7, 123123 asd
-NAME | I am a jew whore < a2
-aw  a ,, 
+Example 1 | 1 ( Toggle : p : 2.0)
+Example 2 | 2 ( Toggle : F5 : 4.0 )( Hold : p : 2.0) <>
+Example 3 | 1 (AWP : p : 2.0, 4.0)
+Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
