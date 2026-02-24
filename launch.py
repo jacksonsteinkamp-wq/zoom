@@ -3,11 +3,11 @@ global presetlist
 presetlist = []
 
 def clear(): #CHATGPT HELPED ME WITH THIS FUNCTION, I DIDNT KNOW HOW TO CLEAR THE TERMINAL
-    #print("\033[2J\033[H", end="")
-    print("Cleared terminal!") #Just for testing, to make sure it works. Will remove later. (WORKED)
+    print("\033[2J\033[H", end="")
+    # print("Cleared terminal!") #Just for testing, to make sure it works. Will remove later. (WORKED)
     
 def firstquestion():
-    clear()
+    #TODO find a way for me to clear this maybe idrk yet the reason I can't may just be for testing
     print("What would you like to do?")
     print("0 - Previous Setup")
     print("1 - Presets")
@@ -59,9 +59,9 @@ def select_Which_Preset_Edit_To_Do():
         for preset in presetlist:
             file.write(preset + "\n")
         file.close()
-        return None
+        return
     elif action == '2':
-        Chosen_Preset_To_Edit = selectpreset()
+        Chosen_Preset_To_Edit = choosepreset()
         return Chosen_Preset_To_Edit
     elif action == "3":
         print("Going back!") #Just so I remember what this is, too fast to see
@@ -72,28 +72,16 @@ def select_Which_Preset_Edit_To_Do():
 def runpreset(preset):
     exit #TODO implement this (MAYBE)(HARD). Will definitely use other py file(s) for this. Include 'if None"
     
-def selectpreset():
-    getpresets()
-    clear()
-    print('Which preset would you like to edit? \nKey - Preset') 
-    for i, preset in enumerate(presetlist):
-        print(str(i) + " - " + preset.split('|')[0])
-    choice = presetlist[int(input("Enter the number of your choice: \n"))] #I forgot why it says 'presetlist' in this line. #TODO find out
-    return choice
-
 def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
+    getpresets()
     clear()
     print("Choose a preset:")
     for i, preset in enumerate(presetlist):
-        print(str(i) + " - " + preset.split('|')[0]) #TODO find out if I can/should do .strip here
+        print(str(i) + " - " + preset.split('|')[0])
     choice = int(input("Enter the number of your choice: \n"))
-    if type(choice) != int:
-        print("Invalid input, please use a number.")
-        return choosepreset()
     return presetlist[choice]
 
 #It is now unclear which of the above files to use, thanks to my lack of organization
-
 
 def previoussetup():
     getpresets()
@@ -127,8 +115,9 @@ def main():
             Chosen_Preset_To_Edit = select_Which_Preset_Edit_To_Do()
             if Chosen_Preset_To_Edit != None:
                 clear()
-                print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0])  #TODO find out if I can/should do .strip here
+                print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0]) 
                 presetanal.editpreset(Chosen_Preset_To_Edit)
+            #TODO add the editing of preset, and also #TODO somewhere this variable became an integer so this won't work. 
             
         elif firstresult == '3':
             break
@@ -136,19 +125,19 @@ def main():
         elif firstresult == "oz": #just for testing, opens zoom
             zoom.main() 
             
-        elif firstresult == "rd": #TODO ask PP for some reason this one makes me enter 'rd' twice idk why (just for testing though so idk if it matters, I can also just put it above the main())
-            presetanal.readpresetdata(selectpreset()) #just for testing, reads data in all one
+        elif firstresult == "rd":
+            presetanal.readpresetdata(choosepreset()) #just for testing, reads data in all one
         
         elif firstresult == "fpt":
             getpresets()
-            presetanal.determine_preset_type(selectpreset()) #for testing, finds preset type (AWP, Hold, or Toggle)
+            presetanal.determine_preset_type(choosepreset()) #for testing, finds preset type (AWP, Hold, or Toggle)
 
         elif firstresult not in ['0', '1', '2', '3']:
             print("Invalid input, please enter a number from 0 to 3")
             continue
         
-        
-#presetanal.isolatekeys(selectpreset()) #This one also makes me enter twice #TODO ask PP
+
+presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
 
 
 main()
@@ -176,5 +165,6 @@ subprocess.run([sys.executable, "zoom.py"]) #used chatgpt #USE THIS
 #TODO remove some functions (example remove preset), more files, library/definition?
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
 #TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
+#TODO make the text and clearing make sense again, I messed it up
 
 '''
