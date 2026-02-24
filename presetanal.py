@@ -6,36 +6,25 @@ def editpreset(preset):
     
     
     
-    
-    
-    
+def importpresetlist():
+    global presetlist
+    import launch
+    presetlist = launch.getpresets()
+    return presetlist
+
 def readpresetdata():
-    exit
-    
-    
-    
-    
-    
-    
+    for preset in importpresetlist():
+        name = preset.split('|')[0].strip()
+        numkeys = preset.split('|')[1].split("(")[0].strip()
+        print(determine_preset_type(preset))
+        print("Preset Name: " + name)
+        print("Number of Keys: " + numkeys)
     
     
 def determine_preset_type(preset):
-        print(preset.split('(')[1].split(':')[0]) #This is the mode, either toggle or AWP. I can use this to determine which function to call in the zoom.py file.
+        return(preset.split('(')[1].split(':')[0].strip()) #This is the mode, either Toggle, Hold, or AWP. I can use this to determine which function to call in the zoom.py file.  
         
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    #exit #TODO
-    
-    
-    
-    
+
 def update_newestpreset(): #Maybe have this take an argument?
     exit #TODO
     

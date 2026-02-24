@@ -2,11 +2,12 @@ import subprocess, sys, presetanal, zoom
 global presetlist
 presetlist = []
 
-#def  clear(): #CHATGPT HELPED ME WITH THIS FUNCTION, I DIDNT KNOW HOW TO CLEAR THE TERMINAL
-#    print("\033[2J\033[H", end="")
+def clear(): #CHATGPT HELPED ME WITH THIS FUNCTION, I DIDNT KNOW HOW TO CLEAR THE TERMINAL
+    #print("\033[2J\033[H", end="")
+    print("Cleared terminal!") #Just for testing, to make sure it works. Will remove later. (WORKED)
     
 def firstquestion():
-    #clear()
+    clear()
     print("What would you like to do?")
     print("0 - Previous Setup")
     print("1 - Presets")
@@ -15,14 +16,15 @@ def firstquestion():
     return input("Enter the number of your choice: \n") #TODO make it onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
 
 def getpresets():
-    #presetlist. clear()
+    presetlist.clear()
     file = open("presets.txt", "r")
     for line in file:
         presetlist.append(line.strip())
     file.close()
+    return presetlist
     
 def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
-     #clear()
+    clear()
     print("Choose a preset:")
     for i, preset in enumerate(presetlist):
         print(str(i) + " - " + preset.split('|')[0]) #TODO find out if I can/should do .strip here
@@ -33,7 +35,7 @@ def choosepreset(): #chooses preset to run, then runs it. #TODO implement the ru
     return presetlist[choice]
     
 def select_Which_Preset_Edit_To_Do():
-     #clear()
+    clear()
     print("Choose an action:")
     print("0 - Create new preset")
     print("1 - Remove a preset")
@@ -44,7 +46,7 @@ def select_Which_Preset_Edit_To_Do():
         print("Invalid input, please enter a number from 0 to 3")
         return select_Which_Preset_Edit_To_Do()
     if action == '0': #Add a preset
-         #clear()
+        clear()
         newpresetname = input("Enter the name of the new preset: \nEnter '0' to go back\n")
         if newpresetname != '0':
             for i in newpresetname:
@@ -81,7 +83,7 @@ def runpreset(preset):
     exit #TODO implement this (HARD). Will definitely use other py file(s) for this. 
     
 def selectpreset():
-     #clear()
+    clear()
     print('Which preset would you like to edit? \nKey - Preset')
     for i, preset in enumerate(presetlist):
         print(str(i) + " - " + preset.split('|')[0])  #TODO find out if I can do .strip here
@@ -100,14 +102,14 @@ def main():
     while True:
         firstresult = firstquestion()
         if firstresult == '0': #Run preset from the previous time running this file 
-             #clear()
+            clear()
             print("Running previous setup...")
             runpreset(previoussetup())
             
         elif firstresult == '1': #Choose a preset from the presets.txt file and run it 
             getpresets()
             preset_to_run = choosepreset()
-             #clear()
+            clear()
             print("Running preset: " + preset_to_run.split('|')[0])
             runpreset(preset_to_run)
             
@@ -115,15 +117,18 @@ def main():
             getpresets()
             Chosen_Preset_To_Edit = select_Which_Preset_Edit_To_Do()
             if Chosen_Preset_To_Edit != None:
-                 #clear()
+                clear()
                 print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0])  #TODO find out if I can/should do .strip here
                 presetanal.editpreset(Chosen_Preset_To_Edit)
             
         elif firstresult == '3':
             break
 
-        #elif firstresult == "p":
-        #    zoom.main() #This is just for testing, to make sure I can run the zoom script from this file. Will remove later. (WORKED)
+        elif firstresult == "p":
+            zoom.main() #This is just for testing, to make sure I can run the zoom script from this file. Will remove later. (WORKED)
+            
+        elif firstresult == "e": #TODO ask PP for some reason this makes me enter 'e' twice idk why
+            presetanal.readpresetdata() #This is just for testing, to make sure I can run the presetanal script from this file. Will remove later. (WORKED)
         
         elif firstresult == "l":
             getpresets()
