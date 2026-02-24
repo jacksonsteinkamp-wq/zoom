@@ -23,16 +23,6 @@ def getpresets():
     file.close()
     return presetlist
     
-def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
-    clear()
-    print("Choose a preset:")
-    for i, preset in enumerate(presetlist):
-        print(str(i) + " - " + preset.split('|')[0]) #TODO find out if I can/should do .strip here
-    choice = int(input("Enter the number of your choice: \n"))
-    if type(choice) != int:
-        print("Invalid input, please use a number.")
-        return choosepreset()
-    return presetlist[choice]
     
 def select_Which_Preset_Edit_To_Do():
     clear()
@@ -85,11 +75,25 @@ def runpreset(preset):
 def selectpreset():
     getpresets()
     clear()
-    print('Which preset would you like to edit? \nKey - Preset')
+    print('Which preset would you like to edit? \nKey - Preset') 
     for i, preset in enumerate(presetlist):
-        print(str(i) + " - " + preset.split('|')[0])  #TODO find out if I can do .strip here
-    choice = presetlist[int(input("Enter the number of your choice: \n"))]
+        print(str(i) + " - " + preset.split('|')[0])
+    choice = presetlist[int(input("Enter the number of your choice: \n"))] #I forgot why it says 'presetlist' in this line. #TODO find out
     return choice
+
+def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
+    clear()
+    print("Choose a preset:")
+    for i, preset in enumerate(presetlist):
+        print(str(i) + " - " + preset.split('|')[0]) #TODO find out if I can/should do .strip here
+    choice = int(input("Enter the number of your choice: \n"))
+    if type(choice) != int:
+        print("Invalid input, please use a number.")
+        return choosepreset()
+    return presetlist[choice]
+
+#It is now unclear which of the above files to use, thanks to my lack of organization
+
 
 def previoussetup():
     getpresets()
@@ -129,23 +133,33 @@ def main():
         elif firstresult == '3':
             break
 
-        elif firstresult == "openzoom":
-            zoom.main() #This is just for testing, to make sure I can run the zoom script from this file. Will remove later. (WORKED)
+        elif firstresult == "oz": #just for testing, opens zoom
+            zoom.main() 
             
-        elif firstresult == "readdata": #TODO ask PP for some reason this one makes me enter 'e' twice idk why (just for testing though so idk if it matters, I can also just put it above the main())
-            presetanal.readpresetdatav2() #This is just for testing, to make sure I can run the presetanal script from this file. Will remove later. (WORKED)
+        elif firstresult == "rd": #TODO ask PP for some reason this one makes me enter 'rd' twice idk why (just for testing though so idk if it matters, I can also just put it above the main())
+            presetanal.readpresetdata(selectpreset()) #just for testing, reads data in all one
         
-        elif firstresult == "findpresettype":
+        elif firstresult == "fpt":
             getpresets()
-            presetanal.determine_preset_type(selectpreset()) #This is just for testing, to make sure I can run the presetanal script from this file. Will remove later. (WORKED)
+            presetanal.determine_preset_type(selectpreset()) #for testing, finds preset type (AWP, Hold, or Toggle)
 
         elif firstresult not in ['0', '1', '2', '3']:
             print("Invalid input, please enter a number from 0 to 3")
             continue
-presetanal.isolatekeys(selectpreset()) #This one also makes me enter twice, so I suspect that the issue is in the select presets function
+        
+        
+#presetanal.isolatekeys(selectpreset()) #This one also makes me enter twice #TODO ask PP
+
+
 main()
 input("Press Enter to close program...") #so the python window doesn't close immediately after running the script, allowing the user to see any output before exiting
-#TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
+
+
+
+
+
+
+
 
 ''' NOTES
 
@@ -157,7 +171,10 @@ Example 3 | 1 (AWP : p : 2.0, 4.0)
 Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
 
 subprocess.run([sys.executable, "zoom.py"]) #used chatgpt #USE THIS
-'''
+
 
 #TODO remove some functions (example remove preset), more files, library/definition?
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
+#TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
+
+'''
