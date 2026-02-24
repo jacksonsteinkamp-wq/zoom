@@ -37,28 +37,29 @@ keyinputone = 'p'
 zoominputone = 2 
 zoominputtwo = 4 
 
-initialize_magnifier()
-zoom_level = 1 #here because otherwise the if statements don't know what zoom_level means and would throw and error
-print("Magnifier at 1x")
-while True:
-    # 4x zoom on 'F5' key
-    if keyboard.is_pressed(keyinput2):
-        if zoom_level != zoominputtwo:
-            zoom_level = zoominputtwo #4x
+def main():
+    initialize_magnifier()
+    zoom_level = 1 #here because otherwise the if statements don't know what zoom_level means and would throw and error
+    print("Magnifier at 1x")
+    while True:
+        # 4x zoom on 'F5' key
+        if keyboard.is_pressed(keyinput2):
+            if zoom_level != zoominputtwo:
+                zoom_level = zoominputtwo #4x
+                set_centered_zoom(zoom_level)
+                print("Magnifier at " + str(zoom_level) + "x")
+                
+        # 2x zoom on 'p' key
+        elif keyboard.is_pressed(keyinputone):
+            if zoom_level != zoominputone:
+                zoom_level = zoominputone #2x
+                set_centered_zoom(zoom_level)
+                print("Magnifier at " + str(zoom_level) + "x")
+                        
+        # reset when nothing held
+        elif zoom_level != 1:
+            zoom_level = 1
             set_centered_zoom(zoom_level)
-            print("Magnifier at " + str(zoom_level) + "x")
-            
-    # 2x zoom on 'p' key
-    elif keyboard.is_pressed(keyinputone):
-        if zoom_level != zoominputone:
-            zoom_level = zoominputone #2x
-            set_centered_zoom(zoom_level)
-            print("Magnifier at " + str(zoom_level) + "x")
-                    
-    # reset when nothing held
-    elif zoom_level != 1:
-        zoom_level = 1
-        set_centered_zoom(zoom_level)
-        print("Magnifier at 1x")
-            
-    time.sleep(0.05)
+            print("Magnifier at 1x")
+                
+        time.sleep(0.05)

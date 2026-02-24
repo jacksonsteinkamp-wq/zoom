@@ -97,5 +97,5 @@ def main():
         print("Magnifier uninitialized")
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
