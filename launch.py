@@ -83,6 +83,7 @@ def runpreset(preset):
     exit #TODO implement this (MAYBE)(HARD). Will definitely use other py file(s) for this. Include 'if None"
     
 def selectpreset():
+    getpresets()
     clear()
     print('Which preset would you like to edit? \nKey - Preset')
     for i, preset in enumerate(presetlist):
@@ -141,7 +142,7 @@ def main():
         elif firstresult not in ['0', '1', '2', '3']:
             print("Invalid input, please enter a number from 0 to 3")
             continue
-
+presetanal.isolatekeys(selectpreset()) #This one also makes me enter twice, so I suspect that the issue is in the select presets function
 main()
 input("Press Enter to close program...") #so the python window doesn't close immediately after running the script, allowing the user to see any output before exiting
 #TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.

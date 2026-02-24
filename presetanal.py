@@ -3,11 +3,22 @@
 def editpreset(preset):
     exit #TODO
     
-    
+def isolatekeys(chosenpreset):
+    importpresetlist()
+    charlist = list(chosenpreset.split('|')[1])
+    charlist.pop(0)
+    charlist.pop(0)
+    string2 = ''.join(charlist)
+    keyslist = string2.split('(') #We could I guess determine the amount of keys in the preset by the amount of ( in the string, but this is fine ig (#TODO decide whether to come back and fix)
+    keyslist.pop(0)
+    for i in range(len(keyslist)):
+        keyslist[i] = keyslist[i].replace(')', '').replace('<', '').replace('>', '')
+    print(keyslist)
     
 def importpresetlist():
     global presetlist
     import launch
+    presetlist = []
     presetlist = launch.getpresets()
 
 def readpresetdata(): #Just for testing for now
