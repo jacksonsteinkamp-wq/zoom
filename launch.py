@@ -1,3 +1,4 @@
+#import zoom  #TODO figure this out 
 global presetlist
 presetlist = []
 
@@ -32,11 +33,31 @@ def select_Which_Preset_Edit_To_Do():
     print("2 - Edit a preset")
     print("3 - Go Back")
     action = input("Enter the number of your choice: \n")
-    if action == '0':
-        addpreset()
-        return None
-    elif action == '1':
-        removepreset()
+    if action == '0': #Add a preset
+        newpresetname = input("Enter the name of the new preset: \nEnter '0' to go back\n")
+        if newpresetname != '0':
+            for i in newpresetname:
+                if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':':
+                    print("Presets cannot contain special characters, please try again.")
+                    return #TODO understand this bullshit (and everything else while we're at it)
+            file = open("presets.txt", "a")
+            file.write(newpresetname + "\n")
+            file.close() #TODO implement the rest
+        else:
+            #TODO find out how to clear terminal and implement ts EVERYWHERE
+            print("Going back!")
+            select_Which_Preset_Edit_To_Do()
+            return None
+    elif action == '1': #Remove a preset
+        print("Choose a preset to remove:\nKey - Preset")
+        for i, preset in enumerate(presetlist):
+            print(str(i) + " - " + preset.split('|')[0]) #the split is to only show the name of the preset, not the info associated with it  #TODO find out if I can do .strip here
+        choice = int(input("Enter the number of your choice: \n"))
+        presetlist.pop(choice)
+        file = open("presets.txt", "w")
+        for preset in presetlist:
+            file.write(preset + "\n")
+        file.close()
         return None
     elif action == '2':
         Chosen_Preset_To_Edit = selectpreset()
@@ -55,35 +76,6 @@ def readpresets():
     
 def writepreset(preset): #May not use this idrk yet
     exit #TODO implement this
-
-def addpreset():
-    newpresetname = input("Enter the name of the new preset: \nEnter '0' to go back\n")
-    if newpresetname != 0:
-        for i in newpresetname:
-            if i == ',' or '<' or '>' or '|' or '(' or ')' or ':':
-                print("Presets cannot contain special characters, please try again.")
-                addpreset()
-                return #TODO understand this bullshit (and everything else while we're at it)
-        file = open("presets.txt", "a")
-        file.write(newpresetname + "\n")
-        file.close() #TODO implement the rest
-    else:
-        #TODO find out how to clear terminal and implement ts EVERYWHERE
-        print("Going back!")
-        select_Which_Preset_Edit_To_Do()
-        return #TODO MY DADS A CUCK AND SO I CANT TEST THIS BUT DO SO ASAP
-
-def removepreset():
-    #TODO find out how to clear terminal and implement ts EVERYWHERE
-    print("Choose a preset to remove:\nKey - Preset")
-    for i, preset in enumerate(presetlist):
-        print(str(i) + " - " + preset.split('|')[0]) #the split is to only show the name of the preset, not the info associated with it  #TODO find out if I can do .strip here
-    choice = int(input("Enter the number of your choice: \n"))
-    presetlist.pop(choice)
-    file = open("presets.txt", "w")
-    for preset in presetlist:
-        file.write(preset + "\n")
-    file.close()
 
 def selectpreset(): #TODO make this stop at the comma
     #TODO find out how to clear terminal and implement ts EVERYWHERE
