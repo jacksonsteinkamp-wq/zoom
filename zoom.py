@@ -7,6 +7,7 @@ import keyboard
 # Windows Magnification API (AI)
 magnification = ctypes.WinDLL("Magnification.dll") #Make sure to understand this part
 user32 = ctypes.windll.user32
+ctypes.windll.shcore.SetProcessDpiAwareness(2) #CHAT USED THIS, #TODO test at home as well
 magnification.MagInitialize.restype = wintypes.BOOL
 magnification.MagUninitialize.restype = wintypes.BOOL
 magnification.MagSetFullscreenTransform.argtypes = [wintypes.FLOAT,wintypes.INT,wintypes.INT]
@@ -15,11 +16,9 @@ magnification.MagSetFullscreenTransform.restype = wintypes.BOOL
 # find screen size (AI)
 SCREEN_WIDTH = user32.GetSystemMetrics(0) #Make sure to understand this part
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
-
-#TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC
+print(SCREEN_HEIGHT, SCREEN_WIDTH)
     
 #WHERE MY CODE STARTS
-#TODO code toggle and AWP (in their own files likely)
 
 def initialize_magnifier():
     magnification.MagInitialize() #AI
@@ -63,3 +62,5 @@ def main():
             print("Magnifier at 1x")
                 
         time.sleep(0.05)
+        
+main() #TEMP 

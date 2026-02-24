@@ -162,9 +162,14 @@ Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
 subprocess.run([sys.executable, "zoom.py"]) #used chatgpt #USE THIS
 
 
+#TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC
+#TODO code toggle and AWP (in their own files likely)
+#TODO if we have time, add option for crosshair adjusting (when not fullscreen)
 #TODO remove some functions (example remove preset), more files, library/definition?
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
 #TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
 #TODO make the text and clearing make sense again, I messed it up
+
+python.analysis.typeCheckingMode <-- I enabled
 
 '''
