@@ -80,7 +80,7 @@ def select_Which_Preset_Edit_To_Do():
 
     
 def runpreset(preset):
-    exit #TODO implement this (HARD). Will definitely use other py file(s) for this. 
+    exit #TODO implement this (MAYBE)(HARD). Will definitely use other py file(s) for this. Include 'if None"
     
 def selectpreset():
     clear()
@@ -97,6 +97,10 @@ def previoussetup():
             if char == '<':
                 strprevioussetupvar = preset 
                 print('Found Previous: ' + strprevioussetupvar.split('|')[0] + '\nRunning Previous...')
+                return strprevioussetupvar
+            else:
+                print("No previous setup found, going back to main menu...")
+                return None
                 
 def main():
     while True:
@@ -124,13 +128,13 @@ def main():
         elif firstresult == '3':
             break
 
-        elif firstresult == "p":
+        elif firstresult == "openzoom":
             zoom.main() #This is just for testing, to make sure I can run the zoom script from this file. Will remove later. (WORKED)
             
-        elif firstresult == "e": #TODO ask PP for some reason this makes me enter 'e' twice idk why
-            presetanal.readpresetdata() #This is just for testing, to make sure I can run the presetanal script from this file. Will remove later. (WORKED)
+        elif firstresult == "readdata": #TODO ask PP for some reason this one makes me enter 'e' twice idk why (just for testing though so idk if it matters, I can also just put it above the main())
+            presetanal.readpresetdatav2() #This is just for testing, to make sure I can run the presetanal script from this file. Will remove later. (WORKED)
         
-        elif firstresult == "l":
+        elif firstresult == "findpresettype":
             getpresets()
             presetanal.determine_preset_type(selectpreset()) #This is just for testing, to make sure I can run the presetanal script from this file. Will remove later. (WORKED)
 

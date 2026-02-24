@@ -1,6 +1,5 @@
 #TODO rename this document (here and in launch.py)
 
-
 def editpreset(preset):
     exit #TODO
     
@@ -10,67 +9,38 @@ def importpresetlist():
     global presetlist
     import launch
     presetlist = launch.getpresets()
-    return presetlist
 
-def readpresetdata():
-    for preset in importpresetlist():
+def readpresetdata(): #Just for testing for now
+    importpresetlist()
+    for preset in (presetlist):
         name = preset.split('|')[0].strip()
         numkeys = preset.split('|')[1].split("(")[0].strip()
-        print(determine_preset_type(preset))
+        zooms = preset.split(')')[0].split(':')[2].strip().split(",")
         print("Preset Name: " + name)
         print("Number of Keys: " + numkeys)
-    
-    
+        for char in preset:
+            if char == '<':
+                print('Is previous setup')
+                break
+        if numkeys == '1':
+            print(determine_preset_type(preset)) #TODO make this work for things with multiple keys (currently only works for 1 key, which is what I have for testing so it works for now but will need to be fixed eventually)
+        else:
+            print("Multiple keys, not currently supported for testing so skipping preset type")
+        print("Zoom Level(s): " + str(zooms) + " currently only works if theres only one key, which is what I have for testing so it works for now but will need to be fixed eventually") 
+        
+def readpresetdatav2():
+    importpresetlist()
+    for preset in (presetlist):
+        numkeys = int(preset.split('|')[1].split("(")[0].strip())
+        keydatalist = preset.split('(')
+        
+        
+        
+        
+
+        
 def determine_preset_type(preset):
         return(preset.split('(')[1].split(':')[0].strip()) #This is the mode, either Toggle, Hold, or AWP. I can use this to determine which function to call in the zoom.py file.  
         
-
 def update_newestpreset(): #Maybe have this take an argument?
     exit #TODO
-    
-    
-def getpresets():
-    #presetlist.clear()
-
-    try:
-        with open("presets.txt", "r") as file:
-            for line in file:
-                line = line.strip()
-                if not line:
-                    continue
-
-                recent = "<>" in line
-                line = line.replace("<>", "").strip()
-
-                name_part, rest = line.split("|", 1)
-                name = name_part.strip()
-
-                preset = {
-                    "name": name,
-                    "keys": [],
-                    "recent": recent
-                }
-
-                # find all (...) groups
-                parts = rest.split("(")
-
-                for part in parts[1:]:
-                    keydata = part.split(")")[0]
-
-                    mode, key, zooms = keydata.split(":")
-
-                    zoom_levels = [
-                        float(z.strip())
-                        for z in zooms.split(",")
-                    ]
-
-                    preset["keys"].append({
-                        "mode": mode.strip(),
-                        "key": key.strip(),
-                        "zoom_levels": zoom_levels
-                    })
-
-                #presetlist.append(preset)
-
-    except FileNotFoundError:
-        open("presets.txt", "w").close()
