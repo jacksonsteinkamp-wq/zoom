@@ -16,12 +16,15 @@ def firstquestion():
     return input("Enter the number of your choice: \n") 
 
 def getpresets():
-    presetlist.clear()
+    global presetlist
+    presetlist = []
     file = open("presets.txt", "r")
     for line in file:
-        presetlist.append(line.strip())
+            presetlist.append(line.strip())
     file.close()
-    return presetlist
+    if presetlist != None:
+        return presetlist
+    
     
 def select_Which_Preset_Edit_To_Do():
     clear()
@@ -49,15 +52,25 @@ def select_Which_Preset_Edit_To_Do():
             print("Going back!") #Just so I remember what this is, too fast to see
             return
     elif action == '1': #Remove a preset
+        getpresets()
+        if not presetlist:
+            print("No presets to remove.")
+            return
         print("Choose a preset to remove:\nKey - Preset")
         for i, preset in enumerate(presetlist):
-            print(str(i) + " - " + preset.split('|')[0])  #TODO find out if I can do .strip here
-        choice = int(input("Enter the number of your choice: \n"))
+            print(str(i) + " - " + preset.split('|')[0])
+        try:
+            choice = int(input("Enter the number of your choice: \n"))
+        except ValueError:
+            print("Invalid input — must be a number.")
+            return
+        if choice < 0 or choice >= len(presetlist):
+            print("Choice out of range.")
+            return
         presetlist.pop(choice)
-        file = open("presets.txt", "w")
-        for preset in presetlist:
-            file.write(preset + "\n")
-        file.close()
+        with open("presets.txt", "w") as file:
+            for preset in presetlist:
+                file.write(preset + "\n")
         return
     elif action == '2':
         Chosen_Preset_To_Edit = choosepreset()
@@ -76,8 +89,16 @@ def choosepreset(): #chooses preset to run, then runs it. #TODO implement the ru
     print("Choose a preset:")
     for i, preset in enumerate(presetlist):
         print(str(i) + " - " + preset.split('|')[0])
-    choice = int(input("Enter the number of your choice: \n"))
-    return presetlist[choice]
+    try:
+        choice = int(input("Enter the number of your choice: \n"))
+    except ValueError:
+        print("Invalid input — must be a number.")
+        return None
+    if choice < 0 or choice >= len(presetlist):
+        print("Choice out of range.")
+        return None
+    if presetlist != None:
+        return presetlist[choice]
 
 #It is now unclear which of the above files to use, thanks to my lack of organization
 
@@ -104,9 +125,12 @@ def main():
         elif firstresult == '1': #Choose a preset from the presets.txt file and run it 
             getpresets()
             preset_to_run = choosepreset()
-            clear()
-            print("Running preset: " + preset_to_run.split('|')[0])
-            runpreset(preset_to_run)
+            if preset_to_run != None:
+                clear()
+                print("Running preset: " + preset_to_run.split('|')[0])
+                runpreset(preset_to_run)
+            else:
+                return
             
         elif firstresult == '2': #Edit the presets in the presets.txt file, allowing the user to add, remove, or edit presets 
             getpresets()
@@ -135,7 +159,7 @@ def main():
             continue
         
 
-presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
+#presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
 
 
 main() #This code won't work unless the main() in zoom.py is gone
