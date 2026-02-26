@@ -184,6 +184,12 @@ Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
 #TODO make the text and clearing make sense again, I messed it up
 #TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
 
+
+for i in range(len(players)):
+    print(players[i] + ": " + str(goals_scored[i]) + " goals")
+
+USE THAT!!!! NOT CONCATENATE!!! #TODO
+
 python.analysis.typeCheckingMode <-- I enabled this setting on VSCode
 
 '''
