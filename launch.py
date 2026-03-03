@@ -3,8 +3,8 @@ global presetlist
 presetlist = []
 
 def clear(): #CHATGPT HELPED ME WITH THIS FUNCTION, I DIDNT KNOW HOW TO CLEAR THE TERMINAL
-    #print("\033[2J\033[H", end="")
-    print("pretend I cleared here")
+    print("\033[2J\033[H", end="")
+    #print("pretend I cleared here")
     
 def firstquestion():
     clear()
@@ -173,9 +173,8 @@ def main():
             print("Invalid input, please enter a number from 0 to 3")
             continue
         
-#presetanal.readpresetdata(choosepreset())
+#print(presetanal.readpresetdata(choosepreset())) #This one also makes me enter twice #TODO ask PP
 #presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
-
 
 main() #This code won't work unless the main() in zoom.py is gone
 input("Press Enter to close program...") #so the python window doesn't close immediately after running the script, allowing the user to see any output before exiting
@@ -197,6 +196,7 @@ Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
 #TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
 #TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
 #TODO if we have time add DPI
+#TODO make area to analyze the results from readpresetdata and use them on zoom.py
         
 python.analysis.typeCheckingMode <-- I enabled this setting on VSCode
 

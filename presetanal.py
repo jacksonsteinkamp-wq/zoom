@@ -10,6 +10,8 @@ def isolatekeys(chosenpreset):
     keyslist.pop(0)
     for i in range(len(keyslist)):
         keyslist[i] = keyslist[i].replace(')', '').replace('<', '').replace('>', '')
+    #print(keyslist)
+    #print('the above is from isolatekeys')
     return(keyslist)
     
 def importpresetlist():
@@ -23,8 +25,8 @@ def readpresetdata(preset): #TODO make this work!
     preset = preset.strip()
     name = preset.split('|')[0].strip()
     numkeys = preset.split('|')[1].split("(")[0].strip()
-    print("Preset Name: " + name)
-    print("Number of Keys: " + numkeys)
+    #print("Preset Name: " + name)
+    #print("Number of Keys: " + numkeys)
     isprevioussetup = False
     for char in preset:
         if char == '<':
@@ -41,10 +43,11 @@ def readpresetdata(preset): #TODO make this work!
         for times in zooms.split(','):
             zoomlevels.append(float(times.strip()))
         keys.append((mode.strip(), key.strip(), zoomlevels))
-        print('\nKey No: ' + str(keyno) + '\nMode: ' + mode.strip() + '\nKey: ' + key.strip() + "\nZoom Level(s): " + str(zoomlevels))
+        #print('\nKey No: ' + str(keyno) + '\nMode: ' + mode.strip() + '\nKey: ' + key.strip() + "\nZoom Level(s): " + str(zoomlevels) + '\n')
         keyno += 1
-            
-    #TODO add the <> (here?)
+    return[name, int(numkeys), keys, isprevioussetup]
+                
+    #TODO add the <> (here? when I run it?)
 
 
 def determine_preset_type(preset):#This is the mode, either Toggle, Hold, or AWP. I can use this to determine which function to call in the zoom.py file. This is for one key
