@@ -174,30 +174,26 @@ def main():
             continue
         
 #print(presetanal.readpresetdata(choosepreset())) #This one also makes me enter twice #TODO ask PP
+#time.sleep(1000)
 #presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
+#time.sleep(1000)
 
-main() #This code won't work unless the main() in zoom.py is gone
+main()
 input("Press Enter to close program...") #so the python window doesn't close immediately after running the script, allowing the user to see any output before exiting
 
 
 ''' NOTES
 
-The <> is the marker of the previous preset. 
-'Name' | 'number of keys' : ("Type of first key" : Keyboard Key : zoom level ) <>
-Example 1 | 1 ( Toggle : p : 2.0)
-Example 2 | 2 ( Toggle : F5 : 4.0 )( Hold : p : 2.0) <> #This is the most recently used file
-Example 3 | 1 (AWP : p : 2.0, 4.0) #It occurs to me that I could use the same AWP code for Toggle
-Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
-
 #TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC
-#TODO code toggle and AWP (in their own files likely)
-#TODO if we have time, add option for crosshair adjusting (in presets) (won't work across resolutions) (for when a game is not fullscreen, like minecraft or something)
+#TODO code toggle and AWP (in their own files likely, if we have time)
+#TODO if we have time, add option for crosshair offsets (in presets) (won't work across resolutions) (for when a game is not fullscreen, like minecraft or something)
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
-#TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
 #TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
-#TODO if we have time add DPI
-#TODO make area to analyze the results from readpresetdata and use them on zoom.py
-        
+#TODO if we have time add DPI changer (likely hard ash
+#TODO make it able to be bound to right click
+#TODO test on multiple setup
+#TODO make sure no duplicate preset names (maybe)
+
 python.analysis.typeCheckingMode <-- I enabled this setting on VSCode
 
 '''
