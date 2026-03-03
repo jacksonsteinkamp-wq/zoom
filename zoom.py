@@ -16,6 +16,7 @@ magnification.MagSetFullscreenTransform.restype = wintypes.BOOL
 # find screen size (AI)
 SCREEN_WIDTH = user32.GetSystemMetrics(0) #Make sure to understand this part
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
+print("Finding Monitor Specs...")
 print("Screen Width: " + str(SCREEN_WIDTH) + "\nScreen Height: " + str(SCREEN_HEIGHT))
     
 #WHERE MY CODE STARTS
@@ -33,6 +34,7 @@ zoominputone = 2
 zoominputtwo = 4 
 
 def main():
+    quit = 0
     magnification.MagInitialize() #AI helped me understand this
     zoom_level = 1 #here because otherwise the if statements don't know what zoom_level means and would throw and error
     print("Magnifier at 1x")
@@ -58,6 +60,19 @@ def main():
             print("Magnifier at 1x")
                 
         time.sleep(0.05)
-        
-#main() #TEMP (REMOVE WHEN RUNNING launch.py)
-
+        if keyboard.is_pressed('ESC'):
+            quit += 1
+            if quit == 1:
+                print("\033[2J\033[H", end="")
+                print("Exiting in 3 Seconds!")
+            elif quit == 20:
+                print("\033[2J\033[H", end="")
+                print('Exiting in 2 Seconds!')
+            elif quit == 40:
+                print("\033[2J\033[H", end="")
+                print("Exiting!")
+            if quit >= 60:
+                exit()
+        else:
+            quit = 0
+            

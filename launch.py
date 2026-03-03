@@ -1,4 +1,4 @@
-import subprocess, sys, presetanal, zoom
+import subprocess, sys, presetanal, zoom, time
 global presetlist
 presetlist = []
 
@@ -57,8 +57,10 @@ def select_Which_Preset_Edit_To_Do():
             print("No presets to remove.")
             return
         print("Choose a preset to remove:\nKey - Preset")
-        for i, preset in enumerate(presetlist):
+        i = 0
+        for preset in presetlist:
             print(str(i) + " - " + preset.split('|')[0])
+            i += 1
         try:
             choice = int(input("Enter the number of your choice: \n"))
         except ValueError:
@@ -85,22 +87,27 @@ def runpreset(preset):
     
 def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
     getpresets()
-    clear()
-    print("Choose a preset:")
-    for i, preset in enumerate(presetlist):
-        print(str(i) + " - " + preset.split('|')[0])
-    try:
-        choice = int(input("Enter the number of your choice: \n"))
-    except ValueError:
-        print("Invalid input — must be a number.")
-        return None
-    if choice < 0 or choice >= len(presetlist):
-        print("Choice out of range.")
-        return None
-    if presetlist != None:
-        return presetlist[choice]
-
-#It is now unclear which of the above files to use, thanks to my lack of organization
+    while True:
+        clear()
+        print("Choose a preset:")
+        i = 0
+        for preset in presetlist:
+            print(str(i) + " - " + preset.split('|')[0])
+            i += 1
+        try:
+            choice = int(input("Enter the number of your choice: \n"))
+        except ValueError:
+            print("Invalid input — must be a number. Try again in a second.")
+            print('Clearing...')
+            time.sleep(1)
+            continue
+        if choice < 0 or choice >= len(presetlist):
+            print("Choice out of range. Try again in a second.")
+            print('Clearing...')
+            time.sleep(1)
+            continue
+        if presetlist != None:
+            return presetlist[choice]
 
 def previoussetup():
     getpresets()
@@ -108,7 +115,7 @@ def previoussetup():
         for char in preset:
             if char == '<':
                 strprevioussetupvar = preset 
-                print('Found Previous: ' + strprevioussetupvar.split('|')[0] + '\nRunning Previous...')
+                print('Found Previous: ' + strprevioussetupvar.split('|')[0] + '\nRunning Previous...' + '\nHold Escape to Quit!')
                 return strprevioussetupvar
             else:
                 print("No previous setup found, going back to main menu...")
@@ -120,14 +127,22 @@ def main():
         if firstresult == '0': #Run preset from the previous time running this file 
             clear()
             print("Running previous setup...")
-            runpreset(previoussetup())
-            
+            setup = previoussetup()
+            if setup != None: 
+                runpreset(setup)
+            else:
+                print("No previous setup found. Try something else in a second.")
+                print("Clearing...")
+                time.sleep(1)
+                clear()
+                return
+                            
         elif firstresult == '1': #Choose a preset from the presets.txt file and run it 
             getpresets()
             preset_to_run = choosepreset()
             if preset_to_run != None:
-                clear()
-                print("Running preset: " + preset_to_run.split('|')[0])
+                #clear()
+                print("Running preset: " + preset_to_run.split('|')[0] + '\nHold Escape to Quit!')
                 runpreset(preset_to_run)
             else:
                 return
@@ -158,7 +173,7 @@ def main():
             print("Invalid input, please enter a number from 0 to 3")
             continue
         
-
+#presetanal.readpresetdata(choosepreset())
 #presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
 
 
@@ -178,18 +193,11 @@ Example 4 | 2 (Hold : p : 2.0 )(AWP : F5 : 2.0, 2.5, 3.0, 3.5)
 #TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC
 #TODO code toggle and AWP (in their own files likely)
 #TODO if we have time, add option for crosshair adjusting (in presets) (won't work across resolutions) (for when a game is not fullscreen, like minecraft or something)
-#TODO remove some functions (example remove preset), more files, library/definition?
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
 #TODO make it so when the user exits, it maybe closes the window / turns off zoom script. If we have time ofc. Also, again if we have time, make any key do this, not just enter.
-#TODO make the text and clearing make sense again, I messed it up
 #TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
-
-
-for i in range(len(players)):
-    print(players[i] + ": " + str(goals_scored[i]) + " goals")
-
-USE THAT!!!! NOT CONCATENATE!!! #TODO
-
+#TODO if we have time add DPI
+        
 python.analysis.typeCheckingMode <-- I enabled this setting on VSCode
 
 '''

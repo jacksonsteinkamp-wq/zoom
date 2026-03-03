@@ -2,7 +2,6 @@ def editpreset(preset):
     print("Not made yet") #TODO
     
 def isolatekeys(chosenpreset):
-    importpresetlist()
     charlist = list(chosenpreset.split('|')[1])
     charlist.pop(0)
     charlist.pop(0)
@@ -11,7 +10,7 @@ def isolatekeys(chosenpreset):
     keyslist.pop(0)
     for i in range(len(keyslist)):
         keyslist[i] = keyslist[i].replace(')', '').replace('<', '').replace('>', '')
-    print(keyslist) #temp
+    return(keyslist)
     
 def importpresetlist():
     global presetlist
@@ -20,25 +19,34 @@ def importpresetlist():
     presetlist = launch.getpresets()
     return
 
-def readpresetdata(preset): #TODO make this work! we are on a good track!
+def readpresetdata(preset): #TODO make this work!
+    preset = preset.strip()
     name = preset.split('|')[0].strip()
     numkeys = preset.split('|')[1].split("(")[0].strip()
-    if numkeys == '1':
-        onetype = determine_preset_type(preset)
-        print("Key Type: " + str(onetype))
-    else:
-        exit ()#TODO (something to do with determine_preset_types_plural()
-        
     print("Preset Name: " + name)
     print("Number of Keys: " + numkeys)
+    isprevioussetup = False
     for char in preset:
         if char == '<':
-            print('Is previous setup')
-            break   
-        
-def determine_preset_types_plural():
-    exit() #TODO
-        
+            print('Is previous setup') #Will maybe be important?
+            isprevioussetup = True 
+            preset = preset.replace('<>','')
+            break  
+    keys = []
+    keyno = 1
+    keysraw = isolatekeys(preset)
+    for keydata in keysraw:
+        mode, key, zooms = keydata.split(":")
+        zoomlevels = []
+        for times in zooms.split(','):
+            zoomlevels.append(float(times.strip()))
+        keys.append((mode.strip(), key.strip(), zoomlevels))
+        print('\nKey No: ' + str(keyno) + '\nMode: ' + mode.strip() + '\nKey: ' + key.strip() + "\nZoom Level(s): " + str(zoomlevels))
+        keyno += 1
+            
+    #TODO add the <> (here?)
+
+
 def determine_preset_type(preset):#This is the mode, either Toggle, Hold, or AWP. I can use this to determine which function to call in the zoom.py file. This is for one key
     if int(preset.split('|')[1].split("(")[0].strip()) == 1:    
         return(str(preset.split('(')[1].split(':')[0].strip()))
