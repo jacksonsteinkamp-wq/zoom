@@ -25,7 +25,6 @@ def getpresets():
     if presetlist != None:
         return presetlist
     
-    
 def select_Which_Preset_Edit_To_Do():
     clear()
     print("Choose an action:")
@@ -83,7 +82,7 @@ def select_Which_Preset_Edit_To_Do():
     
 def runpreset(preset):
     print("Not made yet")
-    #TODO implement this (MAYBE)(HARD). Will definitely use other py file(s) for this. Include 'if None"
+    zoom.main(presetanal.readpresetdata(preset))
     
 def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
     getpresets()
@@ -141,13 +140,13 @@ def main():
             getpresets()
             preset_to_run = choosepreset()
             if preset_to_run != None:
-                #clear()
+                clear()
                 print("Running preset: " + preset_to_run.split('|')[0] + '\nHold Escape to Quit!')
                 runpreset(preset_to_run)
             else:
                 return
             
-        elif firstresult == '2': #Edit the presets in the presets.txt file, allowing the user to add, remove, or edit presets 
+        elif firstresult == '2':
             getpresets()
             Chosen_Preset_To_Edit = select_Which_Preset_Edit_To_Do()
             if Chosen_Preset_To_Edit != None:
@@ -159,28 +158,12 @@ def main():
         elif firstresult == '3':
             break
 
-        elif firstresult == "oz": #just for testing, opens zoom
-            zoom.main() 
-            
-        elif firstresult == "rd":
-            presetanal.readpresetdata(choosepreset()) #just for testing, reads data in all one
-        
-        elif firstresult == "fpt":
-            getpresets()
-            presetanal.determine_preset_type(choosepreset()) #for testing, finds preset type (AWP, Hold, or Toggle)
-
         elif firstresult not in ['0', '1', '2', '3']:
             print("Invalid input, please enter a number from 0 to 3")
             continue
         
-#print(presetanal.readpresetdata(choosepreset())) #This one also makes me enter twice #TODO ask PP
-#time.sleep(1000)
-#presetanal.isolatekeys(choosepreset()) #This one also makes me enter twice #TODO ask PP
-#time.sleep(1000)
-
-main()
+main() #fuck now everything is running twice. #TODO Ask the big PP
 input("Press Enter to close program...") #so the python window doesn't close immediately after running the script, allowing the user to see any output before exiting
-
 
 ''' NOTES
 
@@ -189,10 +172,11 @@ input("Press Enter to close program...") #so the python window doesn't close imm
 #TODO if we have time, add option for crosshair offsets (in presets) (won't work across resolutions) (for when a game is not fullscreen, like minecraft or something)
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
 #TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
-#TODO if we have time add DPI changer (likely hard ash
+#TODO if we have time add DPI changer (likely hard ash)
 #TODO make it able to be bound to right click
 #TODO test on multiple setup
 #TODO make sure no duplicate preset names (maybe)
+#TODO make sure to understand things
 
 python.analysis.typeCheckingMode <-- I enabled this setting on VSCode
 

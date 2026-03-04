@@ -31,39 +31,32 @@ def clear():
     import launch
     launch.clear()
 
-#TODO make these actual user inputs from the other file. Figure out a way for there to be as many as we want. 
-keyinput2 = 'F5'
-keyinputone = 'p' 
-zoominputone = 2 
-zoominputtwo = 4 
-
-def main():
-    quit = 0
-    magnification.MagInitialize() #AI helped me understand this
-    zoom_level = 1 #here because otherwise the if statements don't know what zoom_level means and would throw and error
+def main(data):
+    import presetanal, launch
+    magnification.MagInitialize()
+    zoom_level = 1
     print("Magnifier at 1x")
+    name, numkeys, keys, is_previous = data
+    quit = 0
     while True:
-        # 4x zoom on 'F5' key
-        if keyboard.is_pressed(keyinput2):
-            if zoom_level != zoominputtwo:
-                zoom_level = zoominputtwo #4x
-                set_centered_zoom(zoom_level)
-                print("Magnifier at " + str(zoom_level) + "x")
-                
-        # 2x zoom on 'p' key
-        elif keyboard.is_pressed(keyinputone):
-            if zoom_level != zoominputone:
-                zoom_level = zoominputone #2x
-                set_centered_zoom(zoom_level)
-                print("Magnifier at " + str(zoom_level) + "x")
-                        
-        # reset when nothing held
-        elif zoom_level != 1:
+        pressed = False
+        for mode, key, zooms in keys:
+            if keyboard.is_pressed(key):
+                if mode == "Hold":
+                    if zoom_level != zooms[0]:
+                        zoom_level = zooms[0]
+                        set_centered_zoom(zoom_level)
+                        clear()
+                        print("Magnifier at " + str(zoom_level) + "x")
+                elif mode == "Toggle" or mode == "AWP":
+                    clear()
+                    print("Mode not available")
+                pressed = True
+                break
+        if not pressed and zoom_level != 1:
             zoom_level = 1
             set_centered_zoom(zoom_level)
             print("Magnifier at 1x")
-        
-        #Hold Escape for three seconds to close
         if keyboard.is_pressed('ESC'):
             quit += 1
             if quit == 1:
@@ -77,7 +70,7 @@ def main():
                 print("Exiting!")
             if quit >= 60:
                 exit()
+                magnification.MagUninitialize()
         else:
             quit = 0
-
         time.sleep(0.05)
