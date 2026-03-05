@@ -57,7 +57,7 @@ def main(data):
                         print("Magnifier at " + str(zoom_level) + "x")
                 elif mode == "Toggle" or mode == "AWP":
                     clear()
-                    print("Mode not available") #TODO
+                    print("Mode not available") #TODO make AWP and Toggle
                 pressed = True
                 break
         if not pressed and zoom_level != 1:

@@ -1,6 +1,4 @@
 import time
-def editpreset(preset):
-    print("Not made yet") #TODO
 
 def isolatekeys(chosenpreset):
     charlist = list(chosenpreset.split('|')[1])

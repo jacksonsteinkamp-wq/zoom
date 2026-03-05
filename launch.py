@@ -1,4 +1,4 @@
-import subprocess, sys, presetanal, zoom, time
+import subprocess, sys, presetanal, zoom, time, preseteditor
 global presetlist
 presetlist = []
 
@@ -39,8 +39,8 @@ def getpresets():
     for line in file:
             presetlist.append(line.strip())
     file.close()
-    if presetlist != None:
-        return presetlist
+
+    return presetlist
     
 def select_Which_Preset_Edit_To_Do():
     clear()
@@ -49,10 +49,13 @@ def select_Which_Preset_Edit_To_Do():
     print("1 - Remove a preset")
     print("2 - Edit a preset")
     print("3 - Go Back")
+    
     action = input("Enter the number of your choice: \n")
+    
     if action not in ['0', '1', '2', '3']:
         print("Invalid input, please enter a number from 0 to 3")
         return select_Which_Preset_Edit_To_Do()
+    
     if action == '0':
         clear()
         newpresetname = input("Enter the name of the new preset: \nEnter '0' to go back\n")
@@ -75,6 +78,7 @@ def select_Which_Preset_Edit_To_Do():
             print("Going back!")
             time.sleep(1.5)
             return
+        
     elif action == '1':
         getpresets()
         if not presetlist:
@@ -86,23 +90,26 @@ def select_Which_Preset_Edit_To_Do():
         for preset in presetlist:
             print(str(i) + " - " + preset.split('|')[0])
             i += 1
-        choice = int(input("Enter the number of your choice: \n"))
+        choice = input("Enter the number of your choice: \n")
         if type(choice) is not int:
             print("Invalid input — must be a number. Try again in a second.")
             print('Clearing...')
-            time.sleep(1)
+            time.sleep(1.5)
             return
         if choice < 0 or choice >= len(presetlist):
             print("Choice out of range.")
+            time.sleep(1.5)
             return
         presetlist.pop(choice)
         with open("presets.txt", "w") as file:
             for preset in presetlist:
                 file.write(preset + "\n")
         return
+    
     elif action == '2':
         Chosen_Preset_To_Edit = choosepreset()
         return Chosen_Preset_To_Edit
+    
     elif action == "3":
         print("Going back!")
         time.sleep(1.5)
@@ -128,8 +135,7 @@ def choosepreset():
             print('Clearing...')
             time.sleep(1)
             continue
-        if presetlist != None:
-            return presetlist[choice]
+        return presetlist[choice]
 
 def main():
     while True:
@@ -175,7 +181,9 @@ def main():
                 clear()
                 print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0])
                 time.sleep(2)
-                presetanal.editpreset(Chosen_Preset_To_Edit)
+                preseteditor.editpreset(Chosen_Preset_To_Edit)
+            else:
+                continue
             #TODO add the editing of preset (editing and creating)
             
         elif firstresult == '3':
