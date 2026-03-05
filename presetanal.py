@@ -27,7 +27,6 @@ def readpresetdata(preset):
     isprevioussetup = False
     for char in preset:
         if char == '<':
-            print('Is previous setup')
             time.sleep(3)
             isprevioussetup = True 
             preset = preset.replace('<>','')

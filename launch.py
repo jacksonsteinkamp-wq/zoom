@@ -135,6 +135,7 @@ def main():
     while True:
         firstresult = firstquestion()
         if firstresult == '0':
+            found = False
             clear()
             print("Running previous setup...")
             getpresets()
@@ -143,13 +144,17 @@ def main():
                     if char == '<':
                         previous = preset 
                         print('Found Previous: ' + previous.split('|')[0] + '\nRunning Previous...' + '\nHold Escape to Quit!')
-                else:
-                    print("No previous setup found, going back to main menu...")
-                    time.sleep(1.5)
-                if previous != None: 
-                    presetanal.readpresetdata(previous)
-                clear()
-                continue
+                        time.sleep(2)
+                        zoom.main(presetanal.readpresetdata(previous))
+                        found = True
+                        break
+                if found:
+                    break
+            if not found:    
+                print("No previous setup found, going back to main menu...")
+                time.sleep(1.5)
+            clear()
+            continue                   
                             
         elif firstresult == '1':
             getpresets()
@@ -181,7 +186,6 @@ def main():
             time.sleep(2)
             continue
 
-updaterecent('Example 1')
 main()
 input("Press Enter to close program...")
 
@@ -198,7 +202,7 @@ input("Press Enter to close program...")
 #TODO make sure to understand things FOR CSP
 
 if mouse.is_pressed("right"):
-Valid names:
+Valid names: (maybe mention this (and valid key names) in the readme / pdf)
 "left"
 "right"
 "middle"
