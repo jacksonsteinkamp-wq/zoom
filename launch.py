@@ -2,9 +2,10 @@ import subprocess, sys, presetanal, zoom, time
 global presetlist
 presetlist = []
 
+zoom.imports()
+
 def clear(): #CHATGPT HELPED ME WITH THIS FUNCTION, I DIDNT KNOW HOW TO CLEAR THE TERMINAL
     print("\033[2J\033[H", end="")
-    #print("pretend I cleared here")
     
 def firstquestion():
     clear()
@@ -15,6 +16,22 @@ def firstquestion():
     print("3 - Exit")
     return input("Enter the number of your choice: \n") 
 
+def updaterecent(presetname):
+    file = open("presets.txt", "r")
+    lines = file.readlines()
+    file.close()
+    writelines = []
+    for line in lines:
+        name = line.split('|')[0].strip()
+        line = line.replace(' <>','')
+        if name == presetname.strip():
+            line = line.replace('\n', ' <>\n')
+        writelines.append(line)
+    file = open("presets.txt", "w")
+    for line in writelines:
+        file.write(line)
+    file.close()
+            
 def getpresets():
     global presetlist
     presetlist = []
@@ -36,34 +53,44 @@ def select_Which_Preset_Edit_To_Do():
     if action not in ['0', '1', '2', '3']:
         print("Invalid input, please enter a number from 0 to 3")
         return select_Which_Preset_Edit_To_Do()
-    if action == '0': #Add a preset
+    if action == '0':
         clear()
         newpresetname = input("Enter the name of the new preset: \nEnter '0' to go back\n")
         if newpresetname != '0':
+            getpresets()
+            for preset in presetlist:
+                if newpresetname == preset.split('|')[0].strip():
+                    print("Presets cannot be repeats, please try again.")
+                    time.sleep(1.5)
+                    return
             for i in newpresetname:
                 if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':':
                     print("Presets cannot contain special characters, please try again.")
+                    time.sleep(1.5)
                     return
             file = open("presets.txt", "a")
             file.write(newpresetname + "\n")
             file.close()
         else:
-            print("Going back!") #Just so I remember what this is, too fast to see
+            print("Going back!")
+            time.sleep(1.5)
             return
-    elif action == '1': #Remove a preset
+    elif action == '1':
         getpresets()
         if not presetlist:
             print("No presets to remove.")
+            time.sleep(1.5)
             return
         print("Choose a preset to remove:\nKey - Preset")
         i = 0
         for preset in presetlist:
             print(str(i) + " - " + preset.split('|')[0])
             i += 1
-        try:
-            choice = int(input("Enter the number of your choice: \n"))
-        except ValueError:
-            print("Invalid input — must be a number.")
+        choice = int(input("Enter the number of your choice: \n"))
+        if type(choice) is not int:
+            print("Invalid input — must be a number. Try again in a second.")
+            print('Clearing...')
+            time.sleep(1)
             return
         if choice < 0 or choice >= len(presetlist):
             print("Choice out of range.")
@@ -77,14 +104,11 @@ def select_Which_Preset_Edit_To_Do():
         Chosen_Preset_To_Edit = choosepreset()
         return Chosen_Preset_To_Edit
     elif action == "3":
-        print("Going back!") #Just so I remember what this is, too fast to see
+        print("Going back!")
+        time.sleep(1.5)
         return 
     
-def runpreset(preset):
-    print("Not made yet")
-    zoom.main(presetanal.readpresetdata(preset))
-    
-def choosepreset(): #chooses preset to run, then runs it. #TODO implement the running of the preset
+def choosepreset():
     getpresets()
     while True:
         clear()
@@ -93,9 +117,8 @@ def choosepreset(): #chooses preset to run, then runs it. #TODO implement the ru
         for preset in presetlist:
             print(str(i) + " - " + preset.split('|')[0])
             i += 1
-        try:
-            choice = int(input("Enter the number of your choice: \n"))
-        except ValueError:
+        choice = int(input("Enter the number of your choice: \n"))
+        if type(choice) is not int:
             print("Invalid input — must be a number. Try again in a second.")
             print('Clearing...')
             time.sleep(1)
@@ -108,76 +131,78 @@ def choosepreset(): #chooses preset to run, then runs it. #TODO implement the ru
         if presetlist != None:
             return presetlist[choice]
 
-def previoussetup():
-    getpresets()
-    for preset in presetlist:
-        for char in preset:
-            if char == '<':
-                strprevioussetupvar = preset 
-                print('Found Previous: ' + strprevioussetupvar.split('|')[0] + '\nRunning Previous...' + '\nHold Escape to Quit!')
-                return strprevioussetupvar
-            else:
-                print("No previous setup found, going back to main menu...")
-                return None
-                
 def main():
     while True:
         firstresult = firstquestion()
-        if firstresult == '0': #Run preset from the previous time running this file 
+        if firstresult == '0':
             clear()
             print("Running previous setup...")
-            setup = previoussetup()
-            if setup != None: 
-                runpreset(setup)
-            else:
-                print("No previous setup found. Try something else in a second.")
-                print("Clearing...")
-                time.sleep(1)
+            getpresets()
+            for preset in presetlist:
+                for char in preset:
+                    if char == '<':
+                        previous = preset 
+                        print('Found Previous: ' + previous.split('|')[0] + '\nRunning Previous...' + '\nHold Escape to Quit!')
+                else:
+                    print("No previous setup found, going back to main menu...")
+                    time.sleep(1.5)
+                if previous != None: 
+                    presetanal.readpresetdata(previous)
                 clear()
-                return
+                continue
                             
-        elif firstresult == '1': #Choose a preset from the presets.txt file and run it 
+        elif firstresult == '1':
             getpresets()
             preset_to_run = choosepreset()
             if preset_to_run != None:
                 clear()
-                print("Running preset: " + preset_to_run.split('|')[0] + '\nHold Escape to Quit!')
-                runpreset(preset_to_run)
+                print("Running preset: " + preset_to_run.split('|')[0] + '\nStarting! Hold Escape to Close.')
+                time.sleep(2)
+                updaterecent(preset_to_run.split('|')[0].strip())
+                zoom.main(presetanal.readpresetdata(preset_to_run))
             else:
-                return
+                continue
             
         elif firstresult == '2':
             getpresets()
             Chosen_Preset_To_Edit = select_Which_Preset_Edit_To_Do()
             if Chosen_Preset_To_Edit != None:
                 clear()
-                print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0]) 
+                print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0])
+                time.sleep(2)
                 presetanal.editpreset(Chosen_Preset_To_Edit)
-            #TODO add the editing of preset, and also #TODO somewhere this variable became an integer so this won't work. 
+            #TODO add the editing of preset (editing and creating)
             
         elif firstresult == '3':
-            break
+            exit()
 
         elif firstresult not in ['0', '1', '2', '3']:
             print("Invalid input, please enter a number from 0 to 3")
+            time.sleep(2)
             continue
-        
-main() #fuck now everything is running twice. #TODO Ask the big PP
-input("Press Enter to close program...") #so the python window doesn't close immediately after running the script, allowing the user to see any output before exiting
+
+updaterecent('Example 1')
+main()
+input("Press Enter to close program...")
 
 ''' NOTES
 
-#TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC
-#TODO code toggle and AWP (in their own files likely, if we have time)
-#TODO if we have time, add option for crosshair offsets (in presets) (won't work across resolutions) (for when a game is not fullscreen, like minecraft or something)
-#TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc)
-#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc)
-#TODO if we have time add DPI changer (likely hard ash)
-#TODO make it able to be bound to right click
+#TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC, maybe not for CSP but for myself
+#TODO code toggle and AWP (if we have time)
+#TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc, maybe not for CSP but for myself)
+#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc maybe not for CSP but for myself)
+#TODO make github (mention dpi button) not for csp though
+#TODO make it able to be bound to right click maybe not for CSP but for myself
 #TODO test on multiple setup
 #TODO make sure no duplicate preset names (maybe)
-#TODO make sure to understand things
+#TODO make sure to understand things FOR CSP
 
-python.analysis.typeCheckingMode <-- I enabled this setting on VSCode
+if mouse.is_pressed("right"):
+Valid names:
+"left"
+"right"
+"middle"
+"x"
+"x2"
 
 '''

@@ -1,40 +1,47 @@
 import ctypes
 from ctypes import wintypes
 import time
-import keyboard
+import keyboard, mouse #TODO add mouse supports
+def imports():
+    import presetanal, launch 
+
 #----------------------------------
 #CHATGPT START
 #----------------------------------
-magnification = ctypes.WinDLL("Magnification.dll") #Make sure to understand this part
+
+magnification = ctypes.WinDLL("Magnification.dll")
 user32 = ctypes.windll.user32
 ctypes.windll.shcore.SetProcessDpiAwareness(2) 
 magnification.MagInitialize.restype = wintypes.BOOL
 magnification.MagUninitialize.restype = wintypes.BOOL
 magnification.MagSetFullscreenTransform.argtypes = [wintypes.FLOAT,wintypes.INT,wintypes.INT]
 magnification.MagSetFullscreenTransform.restype = wintypes.BOOL
-SCREEN_WIDTH = user32.GetSystemMetrics(0) #Make sure to understand this part
+SCREEN_WIDTH = user32.GetSystemMetrics(0)
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
 print("Finding Monitor Specs...")
 print("Screen Width: " + str(SCREEN_WIDTH) + "\nScreen Height: " + str(SCREEN_HEIGHT))
+#TODO detect & print monitorsssss
+time.sleep(1.5)
+
+def set_centered_zoom(zoom_level: float):
+    visible_width = SCREEN_WIDTH / zoom_level
+    visible_height = SCREEN_HEIGHT / zoom_level
+    offset_x = int((SCREEN_WIDTH - visible_width) / 2) 
+    offset_y = int((SCREEN_HEIGHT - visible_height) / 2)
+    magnification.MagSetFullscreenTransform(zoom_level, offset_x, offset_y)
+    
 #----------------------------------
 #CHATGPT ENDS, MY CODE BEGINS
 #----------------------------------
-    
-def set_centered_zoom(zoom_level: float): #Centers fullscreen magnifier regardless of monitor resolution (always on whichever monitor is primary)
-    visible_width = SCREEN_WIDTH / zoom_level
-    visible_height = SCREEN_HEIGHT / zoom_level
-    offset_x = int((SCREEN_WIDTH - visible_width) / 2) #Make sure to understand this part
-    offset_y = int((SCREEN_HEIGHT - visible_height) / 2)
-    magnification.MagSetFullscreenTransform(zoom_level, offset_x, offset_y) #AI assist
 
 def clear():
     import launch
     launch.clear()
 
 def main(data):
-    import presetanal, launch
     magnification.MagInitialize()
     zoom_level = 1
+    clear()
     print("Magnifier at 1x")
     name, numkeys, keys, is_previous = data
     quit = 0
@@ -50,7 +57,7 @@ def main(data):
                         print("Magnifier at " + str(zoom_level) + "x")
                 elif mode == "Toggle" or mode == "AWP":
                     clear()
-                    print("Mode not available")
+                    print("Mode not available") #TODO
                 pressed = True
                 break
         if not pressed and zoom_level != 1:
@@ -69,8 +76,8 @@ def main(data):
                 clear()
                 print("Exiting!")
             if quit >= 60:
-                exit()
                 magnification.MagUninitialize()
+                exit()
         else:
             quit = 0
         time.sleep(0.05)
