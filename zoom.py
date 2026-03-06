@@ -1,7 +1,8 @@
 import ctypes
 from ctypes import wintypes
 import time
-import keyboard, mouse #TODO add mouse supports
+import keyboard, mouse 
+
 def imports():
     import presetanal, launch 
 
@@ -20,7 +21,6 @@ SCREEN_WIDTH = user32.GetSystemMetrics(0)
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
 print("Finding Monitor Specs...")
 print("Screen Width: " + str(SCREEN_WIDTH) + "\nScreen Height: " + str(SCREEN_HEIGHT))
-#TODO detect & print monitorsssss
 time.sleep(1.5)
 
 def set_centered_zoom(zoom_level: float):
@@ -57,7 +57,7 @@ def main(data):
                         print("Magnifier at " + str(zoom_level) + "x")
                 elif mode == "Toggle" or mode == "AWP":
                     clear()
-                    print("Mode not available") #TODO make AWP and Toggle
+                    print("Mode not available")
                 pressed = True
                 break
         if not pressed and zoom_level != 1:

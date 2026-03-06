@@ -40,7 +40,3 @@ def readpresetdata(preset):
         keys.append((mode.strip(), key.strip(), zoomlevels))
         keyno += 1
     return[name, int(numkeys), keys, isprevioussetup]
-
-def determine_preset_type(preset):#This is the mode, either Toggle, Hold, or AWP. I can use this to determine which function to call in the zoom.py file. This is for one key
-    if int(preset.split('|')[1].split("(")[0].strip()) == 1:    
-        return(str(preset.split('(')[1].split(':')[0].strip()))

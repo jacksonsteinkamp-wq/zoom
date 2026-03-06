@@ -1,20 +1,10 @@
 import subprocess, sys, presetanal, zoom, time, preseteditor
 global presetlist
 presetlist = []
-
 zoom.imports()
 
-def clear(): #CHATGPT HELPED ME WITH THIS FUNCTION, I DIDNT KNOW HOW TO CLEAR THE TERMINAL
+def clear():
     print("\033[2J\033[H", end="")
-    
-def firstquestion():
-    clear()
-    print("What would you like to do?")
-    print("0 - Previous Setup")
-    print("1 - Presets")
-    print("2 - Edit Presets")
-    print("3 - Exit")
-    return input("Enter the number of your choice: \n") 
 
 def updaterecent(presetname):
     file = open("presets.txt", "r")
@@ -139,7 +129,13 @@ def choosepreset():
 
 def main():
     while True:
-        firstresult = firstquestion()
+        clear()
+        print("What would you like to do?")
+        print("0 - Previous Setup")
+        print("1 - Presets")
+        print("2 - Edit Presets")
+        print("3 - Exit")
+        firstresult = input("Enter the number of your choice: \n") 
         if firstresult == '0':
             found = False
             clear()
@@ -184,7 +180,6 @@ def main():
                 preseteditor.editpreset(Chosen_Preset_To_Edit)
             else:
                 continue
-            #TODO add the editing of preset (editing and creating)
             
         elif firstresult == '3':
             exit()
