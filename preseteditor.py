@@ -86,7 +86,17 @@ def editpreset(preset_line):
         elif choice == '2':
             new_name = input("Enter new name (or '0' to cancel): \n")
             if new_name != '0':
-                name = new_name
+                file = open("presets.txt", "r")
+                taken = False
+                for line in file:
+                    if line.split('|')[0].strip() == new_name.strip():
+                        taken = True
+                file.close()
+                if taken:
+                    print("A preset with that name already exists, or you did not change the preset name.")
+                    time.sleep(2.5)
+                else:
+                    name = new_name.strip()
 
         elif choice == '3':
             key_count = len(entries)

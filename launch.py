@@ -29,7 +29,6 @@ def getpresets():
     for line in file:
             presetlist.append(line.strip())
     file.close()
-
     return presetlist
     
 def select_Which_Preset_Edit_To_Do():
@@ -39,7 +38,6 @@ def select_Which_Preset_Edit_To_Do():
     print("1 - Remove a preset")
     print("2 - Edit a preset")
     print("3 - Go Back")
-    
     action = input("Enter the number of your choice: \n")
     
     if action not in ['0', '1', '2', '3']:
@@ -136,6 +134,7 @@ def main():
         print("2 - Edit Presets")
         print("3 - Exit")
         firstresult = input("Enter the number of your choice: \n") 
+        
         if firstresult == '0':
             found = False
             clear()
@@ -182,6 +181,8 @@ def main():
                 continue
             
         elif firstresult == '3':
+            print("Exiting...")
+            time.sleep(1.5)
             exit()
 
         elif firstresult not in ['0', '1', '2', '3']:
@@ -190,7 +191,6 @@ def main():
             continue
 
 main()
-input("Press Enter to close program...")
 
 ''' NOTES
 
@@ -201,7 +201,6 @@ input("Press Enter to close program...")
 #TODO make github (mention dpi button) not for csp though
 #TODO make it able to be bound to right click maybe not for CSP but for myself
 #TODO test on multiple setup
-#TODO make sure no duplicate preset names (maybe)
 #TODO make sure to understand things FOR CSP
 
 if mouse.is_pressed("right"):
