@@ -7,7 +7,7 @@ def build_entry():
     clear()
     print("0 - Toggle")
     print("1 - Hold")
-    print("2 - AWP")
+    print("2 - AWP (Cycle)")
     print("3 - Cancel")
     action = input("Enter the number of your choice: \n")
 

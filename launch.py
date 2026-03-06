@@ -59,9 +59,11 @@ def select_Which_Preset_Edit_To_Do():
                     print("Presets cannot contain special characters, please try again.")
                     time.sleep(1.5)
                     return
+            new_preset_line = newpresetname
             file = open("presets.txt", "a")
-            file.write(newpresetname + "\n")
+            file.write(new_preset_line + "\n")
             file.close()
+            preseteditor.editpreset(new_preset_line)
         else:
             print("Going back!")
             time.sleep(1.5)
@@ -202,6 +204,7 @@ main()
 #TODO make it able to be bound to right click maybe not for CSP but for myself
 #TODO test on multiple setup
 #TODO make sure to understand things FOR CSP
+#TODO when editing preset make sure its not missing an entry or nothing
 
 if mouse.is_pressed("right"):
 Valid names: (maybe mention this (and valid key names) in the readme / pdf)
@@ -210,5 +213,7 @@ Valid names: (maybe mention this (and valid key names) in the readme / pdf)
 "middle"
 "x"
 "x2"
+
+\r replaces lines btw
 
 '''
