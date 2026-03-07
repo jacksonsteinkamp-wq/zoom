@@ -4,7 +4,7 @@ presetlist = []
 zoom.imports()
 
 def clear():
-    print("\033[2J\033[H", end="")
+    print("\033[2J\033[H", end="") 
 
 def updaterecent(presetname):
     file = open("presets.txt", "r")
@@ -131,7 +131,12 @@ def main():
     while True:
         clear()
         print("What would you like to do?")
-        print("0 - Previous Setup")
+        getpresets()
+        for preset in presetlist:
+            for char in preset:
+                if char == '<':
+                    print("0 - Previous Setup - " + preset.split('|')[0])
+                    break
         print("1 - Presets")
         print("2 - Edit Presets")
         print("3 - Exit")
@@ -217,3 +222,6 @@ Valid names: (maybe mention this (and valid key names) in the readme / pdf)
 \r replaces lines btw
 
 '''
+
+
+

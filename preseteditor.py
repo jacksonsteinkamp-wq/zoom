@@ -23,7 +23,7 @@ def build_entry():
         print("Invalid input.")
         time.sleep(1)
         return build_entry()
-    
+
     key = input("Enter the key for " + mode + " (e.g. F5, p): \n")
 
     if mode == 'AWP':
@@ -55,8 +55,8 @@ def editpreset(preset_line):
         print("Editing: " + name)
         print("Keys:")
         i = 0
-        for e in entries:
-            print(str(i) + " - " + e)
+        for Name in entries:
+            print(str(i) + " - " + Name)
             i += 1
         
         print("\nActions:\n0 - Add a key")
