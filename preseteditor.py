@@ -5,16 +5,16 @@ def clear():
 
 def build_entry():
     clear()
-    print("0 - Toggle")
-    print("1 - Hold")
+    print("0 - Hold")
+    print("1 - Toggle")
     print("2 - AWP (Cycle)")
     print("3 - Cancel")
     action = input("Enter the number of your choice: \n")
 
     if action == '0':
-        mode = 'Toggle'
-    elif action == '1':
         mode = 'Hold'
+    elif action == '1':
+        mode = 'Toggle'
     elif action == '2':
         mode = 'AWP'
     elif action == '3':
@@ -39,13 +39,13 @@ def get_entries(preset_line):
     while i < len(preset_line):
         if preset_line[i] == '(':
             end = preset_line.index(')', i)
-            entries.append(preset_line[i:end+1])
+            entries.append(preset_line[i:end+1]) #what the fuck is this even ask once I have wifi again #TODO left
             i = end + 1
         else:
             i += 1
     return entries
 
-def editpreset(preset_line):
+def editpreset(preset_line): #TODO fix this (make it work / make user able to go back)
     line = preset_line.replace(' <>', '').strip()
     name = line.split('|')[0].strip()
     entries = get_entries(line)
@@ -76,9 +76,9 @@ def editpreset(preset_line):
                 print("Must have at least one key.")
                 time.sleep(1.5)
                 continue
-            idx = input("Enter the number of the key to remove: \n")
-            if int(idx) >= 0 and int(idx) < len(entries):
-                entries.pop(int(idx))
+            numtoremove = input("Enter the number of the key to remove: \n")
+            if int(numtoremove) >= 0 and int(numtoremove) < len(entries):
+                entries.pop(int(numtoremove))
             else:
                 print("Invalid choice.")
                 time.sleep(1)
@@ -88,17 +88,23 @@ def editpreset(preset_line):
             if new_name != '0':
                 file = open("presets.txt", "r")
                 taken = False
+                SpecialChar = False
                 for line in file:
                     if line.split('|')[0].strip() == new_name.strip():
                         taken = True
-                file.close()
+                for i in new_name:
+                    if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\': #TODO check how this works (the backslash in a string)
+                        SpecialChar = True
                 if taken:
                     print("A preset with that name already exists, or you did not change the preset name.")
                     time.sleep(2.5)
+                elif SpecialChar:
+                    print("You cannot use special characters, please try again.")
+                    time.sleep(2)                   
                 else:
                     name = new_name.strip()
 
-        elif choice == '3':
+        elif choice == '3': #TODO make sure that there is at least one functional key here and fix in general
             key_count = len(entries)
             save_line = name + " | " + str(key_count) + " " + "".join(entries)
             if ' <>' in preset_line:
@@ -121,3 +127,19 @@ def editpreset(preset_line):
             print("Cancelled.")
             time.sleep(1)
             return
+        
+def updaterecent(presetname):
+    file = open("presets.txt", "r")
+    lines = file.readlines()
+    file.close()
+    writelines = []
+    for line in lines:
+        name = line.split('|')[0].strip()
+        line = line.replace(' <>','')
+        if name == presetname.strip():
+            line = line.replace('\n', ' <>\n')
+        writelines.append(line)
+    file = open("presets.txt", "w")
+    for line in writelines:
+        file.write(line)
+    file.close()

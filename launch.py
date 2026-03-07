@@ -1,7 +1,6 @@
-import subprocess, sys, presetanal, zoom, time, preseteditor
+import subprocess, sys, presetanalyzer, zoom, time, preseteditor
 global presetlist
 presetlist = []
-zoom.imports()
 
 def clear():
     print("\033[2J\033[H", end="") 
@@ -42,28 +41,35 @@ def select_Which_Preset_Edit_To_Do():
     
     if action not in ['0', '1', '2', '3']:
         print("Invalid input, please enter a number from 0 to 3")
-        return select_Which_Preset_Edit_To_Do()
+        return select_Which_Preset_Edit_To_Do() #TODO fix this bs
     
     if action == '0':
         clear()
         newpresetname = input("Enter the name of the new preset: \nEnter '0' to go back\n")
+        
         if newpresetname != '0':
             getpresets()
+            repeat = False
+            SpecialChar = False
             for preset in presetlist:
                 if newpresetname == preset.split('|')[0].strip():
-                    print("Presets cannot be repeats, please try again.")
-                    time.sleep(1.5)
-                    return
+                    repeat = True
             for i in newpresetname:
-                if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':':
-                    print("Presets cannot contain special characters, please try again.")
-                    time.sleep(1.5)
-                    return
-            new_preset_line = newpresetname
-            file = open("presets.txt", "a")
-            file.write(new_preset_line + "\n")
-            file.close()
-            preseteditor.editpreset(new_preset_line)
+                if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\': #TODO check how this works (the backslash in a string)
+                    SpecialChar = True
+            if repeat:
+                print("Presets cannot be repeats, please try again.")
+                time.sleep(1.5)
+            elif SpecialChar:
+                print("Presets cannot contain special characters, please try again.")
+                time.sleep(1.5)              
+            else:
+                new_preset_line = newpresetname
+                file = open("presets.txt", "a")
+                file.write(new_preset_line + "\n")
+                file.close()
+                preseteditor.editpreset(new_preset_line)
+            
         else:
             print("Going back!")
             time.sleep(1.5)
@@ -75,54 +81,45 @@ def select_Which_Preset_Edit_To_Do():
             print("No presets to remove.")
             time.sleep(1.5)
             return
-        print("Choose a preset to remove:\nKey - Preset")
-        i = 0
-        for preset in presetlist:
-            print(str(i) + " - " + preset.split('|')[0])
-            i += 1
-        choice = input("Enter the number of your choice: \n")
-        if type(choice) is not int:
-            print("Invalid input — must be a number. Try again in a second.")
-            print('Clearing...')
-            time.sleep(1.5)
-            return
-        if choice < 0 or choice >= len(presetlist):
-            print("Choice out of range.")
-            time.sleep(1.5)
-            return
+        choice = choosepreset()
+        if choice == 99: 
+            return  #This is an issue, figure out how to not do this fuck man this is hard ash (I think
         presetlist.pop(choice)
-        with open("presets.txt", "w") as file:
-            for preset in presetlist:
-                file.write(preset + "\n")
+        file = open("presets.txt", "w")
+        for preset in presetlist:
+            file.write(preset + "\n")
+        file.close()
         return
     
     elif action == '2':
-        Chosen_Preset_To_Edit = choosepreset()
-        return Chosen_Preset_To_Edit
+        return choosepreset() #This is an issue, figure out how to not do this fuck man this is hard ash (I think the wifi is off and its 2:34AM)
     
     elif action == "3":
         print("Going back!")
         time.sleep(1.5)
         return 
     
-def choosepreset():
+def choosepreset(): #should this go into presetanalyzer? Do I need that at all? Shouldn't this be just for the ui and the connections? Idk
     getpresets()
     while True:
         clear()
         print("Choose a preset:")
         i = 0
+        print('99 - Go Back')
         for preset in presetlist:
             print(str(i) + " - " + preset.split('|')[0])
             i += 1
         choice = int(input("Enter the number of your choice: \n"))
         if type(choice) is not int:
             print("Invalid input — must be a number. Try again in a second.")
-            print('Clearing...')
             time.sleep(1)
             continue
-        if choice < 0 or choice >= len(presetlist):
+        if choice == 99:
+            print("Going Back...")
+            time.sleep(1)
+            return 99
+        elif choice < 0 or choice >= len(presetlist):
             print("Choice out of range. Try again in a second.")
-            print('Clearing...')
             time.sleep(1)
             continue
         return presetlist[choice]
@@ -153,7 +150,7 @@ def main():
                         previous = preset 
                         print('Found Previous: ' + previous.split('|')[0] + '\nRunning Previous...' + '\nHold Escape to Quit!')
                         time.sleep(2)
-                        zoom.main(presetanal.readpresetdata(previous))
+                        zoom.main(presetanalyzer.readpresetdata(previous))
                         found = True
                         break
                 if found:
@@ -167,18 +164,22 @@ def main():
         elif firstresult == '1':
             getpresets()
             preset_to_run = choosepreset()
+            if preset_to_run == 99:
+                continue 
             if preset_to_run != None:
                 clear()
                 print("Running preset: " + preset_to_run.split('|')[0] + '\nStarting! Hold Escape to Close.')
                 time.sleep(2)
                 updaterecent(preset_to_run.split('|')[0].strip())
-                zoom.main(presetanal.readpresetdata(preset_to_run))
+                zoom.main(presetanalyzer.readpresetdata(preset_to_run))
             else:
                 continue
             
         elif firstresult == '2':
             getpresets()
             Chosen_Preset_To_Edit = select_Which_Preset_Edit_To_Do()
+            if Chosen_Preset_To_Edit == 99:
+                continue
             if Chosen_Preset_To_Edit != None:
                 clear()
                 print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0])
@@ -201,15 +202,24 @@ main()
 
 ''' NOTES
 
-#TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC, maybe not for CSP but for myself
+#TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC, maybe not for CSP but for myself/github
 #TODO code toggle and AWP (if we have time)
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc, maybe not for CSP but for myself)
-#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc maybe not for CSP but for myself)
-#TODO make github (mention dpi button) not for csp though
-#TODO make it able to be bound to right click maybe not for CSP but for myself
+#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc maybe not for CSP but for myself/github)
+#TODO make github (mention dpi button, offset of crosshair, AWP / Cycle) not for csp though
+#TODO make it able to be bound to right click maybe not for CSP but for myself / github
 #TODO test on multiple setup
+
+IMPORTANT
+#TODO make video (last, save time for this)
 #TODO make sure to understand things FOR CSP
-#TODO when editing preset make sure its not missing an entry or nothing
+#TODO when editing preset make sure its not missing an entry or something.
+#TODO when choosing preset, make 99 go back (I think right now it goes hella far, we don't want that. Just like below)
+#TODO when you mess up the renaming or creating new preset, make it go back to choosing a new name instead of the home screen
+#TODO fix editing presets it's weird asf rn
+#TODO FIX EVERTHING I THINK I COOKED IT ITS LATE WITHOUT WIFI
+
+ngl atp not sure what state we are in been a long night
 
 if mouse.is_pressed("right"):
 Valid names: (maybe mention this (and valid key names) in the readme / pdf)
@@ -222,6 +232,3 @@ Valid names: (maybe mention this (and valid key names) in the readme / pdf)
 \r replaces lines btw
 
 '''
-
-
-

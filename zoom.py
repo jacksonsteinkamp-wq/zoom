@@ -3,12 +3,9 @@ from ctypes import wintypes
 import time
 import keyboard, mouse 
 
-def imports():
-    import presetanal, launch 
-
-#----------------------------------
-#CHATGPT START
-#----------------------------------
+#------------------------------------------------------------------------------------------------------
+#CHATGPT START (Though TBH I probably won't turn this file in at all)
+#------------------------------------------------------------------------------------------------------
 
 magnification = ctypes.WinDLL("Magnification.dll")
 user32 = ctypes.windll.user32
@@ -30,20 +27,22 @@ def set_centered_zoom(zoom_level: float):
     offset_y = int((SCREEN_HEIGHT - visible_height) / 2)
     magnification.MagSetFullscreenTransform(zoom_level, offset_x, offset_y)
     
-#----------------------------------
+#------------------------------------------------------------------------------------------------------
 #CHATGPT ENDS, MY CODE BEGINS
-#----------------------------------
+#------------------------------------------------------------------------------------------------------
 
 def clear():
-    import launch
-    launch.clear()
+    while True: # OK so this is the issue. Imma sleep #TODO fix this idk why it doesnt work now but whatever
+        break
+    #import launch
+    #launch.clear()
 
 def main(data):
     magnification.MagInitialize()
     zoom_level = 1
     clear()
     print("Magnifier at 1x")
-    name, numkeys, keys, is_previous = data
+    name, numkeys, keys = data
     quit = 0
     while True:
         pressed = False
@@ -57,7 +56,7 @@ def main(data):
                         print("Magnifier at " + str(zoom_level) + "x")
                 elif mode == "Toggle" or mode == "AWP":
                     clear()
-                    print("Mode not available")
+                    print("Mode not available (Coming soon!)") #TODO Fix
                 pressed = True
                 break
         if not pressed and zoom_level != 1:
@@ -75,7 +74,7 @@ def main(data):
             elif quit == 40:
                 clear()
                 print("Exiting!")
-            if quit >= 60:
+            if quit == 60:
                 magnification.MagUninitialize()
                 exit()
         else:
