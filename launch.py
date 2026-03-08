@@ -30,7 +30,7 @@ def getpresets():
     file.close()
     return presetlist
     
-def select_Which_Preset_Edit_To_Do():
+def chooseEdit():
     clear()
     print("Choose an action:")
     print("0 - Create new preset")
@@ -41,7 +41,7 @@ def select_Which_Preset_Edit_To_Do():
     
     if action not in ['0', '1', '2', '3']:
         print("Invalid input, please enter a number from 0 to 3")
-        return select_Which_Preset_Edit_To_Do()
+        return chooseEdit()
     
     if action == '0':
         clear()
@@ -182,7 +182,7 @@ def main():
             
         elif firstresult == '2':
             getpresets()
-            Chosen_Preset_To_Edit = select_Which_Preset_Edit_To_Do()
+            Chosen_Preset_To_Edit = chooseEdit()
             if Chosen_Preset_To_Edit == 99:
                 continue
             if Chosen_Preset_To_Edit != None:
@@ -208,20 +208,22 @@ main()
 ''' NOTES
 
 #TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC, maybe not for CSP but for myself/github
-#TODO code toggle and AWP (if we have time)
 #TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc, maybe not for CSP but for myself)
 #TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc maybe not for CSP but for myself/github)
 #TODO make github (mention dpi button, offset of crosshair, AWP / Cycle) not for csp though
 #TODO make it able to be bound to right click maybe not for CSP but for myself / github
 #TODO test on multiple setup
+#TODO if we have time, just for me, make .exe
 #TODO when choosing preset, make 99 go back (I think right now it goes hella far, we don't want that. Just like below)
 #TODO when you mess up the renaming or creating new preset, make it go back to choosing a new name instead of the home screen
+#TODO make it so you can remove a key even if you only have 1, you just can't save it with only one key
+
+Semi-Important
+#TODO code AWP and Toggle
 
 IMPORTANT
 #TODO make video (last, save time for this)
 #TODO make sure to understand things FOR CSP
-#TODO fix editing and creating presets it's weird as
-#TODO make it so you can remove a key, you just can't save it with only one key
 
 if mouse.is_pressed("right"):
 Valid names: (maybe mention this (and valid key names) in the readme / pdf)

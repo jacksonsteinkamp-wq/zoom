@@ -44,6 +44,7 @@ def build_entry(entries):
                 if float(i.strip()) <= 1:
                     print("All values must be above 1, try again.")
                     time.sleep(1.5)
+                    clear()
                     valid = False
                     break
             if valid:
@@ -55,6 +56,7 @@ def build_entry(entries):
             if float(zoom) <= 1:
                 print("Must be above 1, try again.")
                 time.sleep(1.5)
+                clear()
                 continue
             break
         return "(" + mode + " : " + key + " : " + zoom + ")"

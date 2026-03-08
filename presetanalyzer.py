@@ -19,7 +19,6 @@ def readpresetdata(preset):
     preset = preset.strip()
     name = preset.split('|')[0].strip()
     numkeys = preset.split('|')[1].split("(")[0].strip()
-    #TODO could I just do this? I don't ever use this is previous thing (I did it, make sure ts works)
     for x in range(len(preset)):
         preset = preset.replace('<>','')
     keys = []

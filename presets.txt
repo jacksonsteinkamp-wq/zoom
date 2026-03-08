@@ -1,2 +1,0 @@
-test1 | 1 (Hold : p : 1.2)
-tews2 | 1 (Hold : 0 : 2) <>
