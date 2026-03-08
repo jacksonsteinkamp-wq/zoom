@@ -3,14 +3,13 @@ import time
 def clear():
     print("\033[2J\033[H", end="")
 
-def build_entry():
+def build_entry(entries):
     clear()
     print("0 - Hold")
     print("1 - Toggle")
     print("2 - AWP (Cycle)")
     print("3 - Cancel")
     action = input("Enter the number of your choice: \n")
-
     if action == '0':
         mode = 'Hold'
     elif action == '1':
@@ -22,30 +21,59 @@ def build_entry():
     else:
         print("Invalid input.")
         time.sleep(1)
-        return build_entry()
-
-    key = input("Enter the key for " + mode + " (e.g. F5, p): \n")
-
+        return build_entry(entries)
+    while True:
+        key = input("Enter the key for " + mode + " (e.g. F5, p): \n")
+        duplicate = False
+        for entry in entries:
+            if entry.split(':')[1].strip() == key.strip():
+                duplicate = True
+                break
+        if duplicate:
+            print("That key is already used in this preset, try again.")
+            time.sleep(1.5)
+            clear()
+        else:
+            break
     if mode == 'AWP':
-        zooms = input("Enter zoom values separated by commas (e.g. \"2.0, 2.5, 3.0\"): \n")
+        while True:
+            zooms = input('Enter zoom values separated by commas (e.g. "2.0, 2.5, 3.0"): \n')
+            zoomlist = zooms.split(",")
+            valid = True
+            for i in zoomlist:
+                if float(i.strip()) <= 1:
+                    print("All values must be above 1, try again.")
+                    time.sleep(1.5)
+                    valid = False
+                    break
+            if valid:
+                break
         return "(" + mode + " : " + key + " : " + zooms + ")"
     else:
-        zoom = input("Enter the zoom value (e.g. 4.0): \n")
+        while True:
+            zoom = input("Enter the zoom value (e.g. 4.0): \n")
+            if float(zoom) <= 1:
+                print("Must be above 1, try again.")
+                time.sleep(1.5)
+                continue
+            break
         return "(" + mode + " : " + key + " : " + zoom + ")"
 
 def get_entries(preset_line):
     entries = []
+    if '(' not in preset_line:
+        return entries
     i = 0
     while i < len(preset_line):
         if preset_line[i] == '(':
             end = preset_line.index(')', i)
-            entries.append(preset_line[i:end+1]) #what the fuck is this even ask once I have wifi again #TODO left
+            entries.append(preset_line[i:end+1])
             i = end + 1
         else:
             i += 1
     return entries
 
-def editpreset(preset_line): #TODO fix this (make it work / make user able to go back)
+def editpreset(preset_line):
     line = preset_line.replace(' <>', '').strip()
     name = line.split('|')[0].strip()
     entries = get_entries(line)
@@ -59,15 +87,15 @@ def editpreset(preset_line): #TODO fix this (make it work / make user able to go
             print(str(i) + " - " + Name)
             i += 1
         
-        print("\nActions:\n0 - Add a key")
+        print("Actions:\n0 - Add a key")
         print("1 - Remove a key")
         print("2 - Rename")
         print("3 - Save and exit")
         print("4 - Cancel")
-        choice = input("Enter the number of your choice: \n")
+        choice = input("Enter the mode of your choice: \n")
 
         if choice == '0':
-            new_entry = build_entry()
+            new_entry = build_entry(entries)
             if new_entry != None:
                 entries.append(new_entry)
 
@@ -93,7 +121,7 @@ def editpreset(preset_line): #TODO fix this (make it work / make user able to go
                     if line.split('|')[0].strip() == new_name.strip():
                         taken = True
                 for i in new_name:
-                    if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\': #TODO check how this works (the backslash in a string)
+                    if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\':
                         SpecialChar = True
                 if taken:
                     print("A preset with that name already exists, or you did not change the preset name.")
@@ -104,11 +132,15 @@ def editpreset(preset_line): #TODO fix this (make it work / make user able to go
                 else:
                     name = new_name.strip()
 
-        elif choice == '3': #TODO make sure that there is at least one functional key here and fix in general
+        elif choice == '3':
+            if len(entries) == 0:
+                print("Cannot save with no keys. Add at least one key first.")
+                time.sleep(1.5)
+                continue
             key_count = len(entries)
             save_line = name + " | " + str(key_count) + " " + "".join(entries)
             if ' <>' in preset_line:
-                save_line = save_line + ' <>'
+                save_line = save_line + ' <>\n'
             file = open("presets.txt", "r")
             lines = file.readlines()
             file.close()
@@ -121,13 +153,17 @@ def editpreset(preset_line): #TODO fix this (make it work / make user able to go
             file.close()
             print("Saved!")
             time.sleep(1.5)
+            clear()
             return
 
         elif choice == '4':
             print("Cancelled.")
             time.sleep(1)
             return
-        
+        else: 
+            print("Invalid Choice. Please try again")
+            time.sleep(1.5)
+            
 def updaterecent(presetname):
     file = open("presets.txt", "r")
     lines = file.readlines()

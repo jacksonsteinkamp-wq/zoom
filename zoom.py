@@ -32,10 +32,7 @@ def set_centered_zoom(zoom_level: float):
 #------------------------------------------------------------------------------------------------------
 
 def clear():
-    while True: # OK so this is the issue. Imma sleep #TODO fix this idk why it doesnt work now but whatever
-        break
-    #import launch
-    #launch.clear()
+    print("\033[2J\033[H", end="") 
 
 def main(data):
     magnification.MagInitialize()

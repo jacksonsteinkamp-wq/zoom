@@ -41,7 +41,7 @@ def select_Which_Preset_Edit_To_Do():
     
     if action not in ['0', '1', '2', '3']:
         print("Invalid input, please enter a number from 0 to 3")
-        return select_Which_Preset_Edit_To_Do() #TODO fix this bs
+        return select_Which_Preset_Edit_To_Do()
     
     if action == '0':
         clear()
@@ -55,7 +55,7 @@ def select_Which_Preset_Edit_To_Do():
                 if newpresetname == preset.split('|')[0].strip():
                     repeat = True
             for i in newpresetname:
-                if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\': #TODO check how this works (the backslash in a string)
+                if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\':
                     SpecialChar = True
             if repeat:
                 print("Presets cannot be repeats, please try again.")
@@ -64,9 +64,9 @@ def select_Which_Preset_Edit_To_Do():
                 print("Presets cannot contain special characters, please try again.")
                 time.sleep(1.5)              
             else:
-                new_preset_line = newpresetname
+                new_preset_line = newpresetname + " | 0"
                 file = open("presets.txt", "a")
-                file.write(new_preset_line + "\n")
+                file.write( new_preset_line) #this \n is an issue I think
                 file.close()
                 preseteditor.editpreset(new_preset_line)
             
@@ -83,7 +83,7 @@ def select_Which_Preset_Edit_To_Do():
             return
         choice = choosepreset()
         if choice == 99: 
-            return  #This is an issue, figure out how to not do this fuck man this is hard ash (I think
+            return
         presetlist.pop(choice)
         file = open("presets.txt", "w")
         for preset in presetlist:
@@ -92,15 +92,20 @@ def select_Which_Preset_Edit_To_Do():
         return
     
     elif action == '2':
-        return choosepreset() #This is an issue, figure out how to not do this fuck man this is hard ash (I think the wifi is off and its 2:34AM)
+        return choosepreset()
     
     elif action == "3":
         print("Going back!")
         time.sleep(1.5)
         return 
     
-def choosepreset(): #should this go into presetanalyzer? Do I need that at all? Shouldn't this be just for the ui and the connections? Idk
+def choosepreset():
     getpresets()
+    if len(presetlist) == 0 :
+        clear()
+        print("No Presets. Please make one.")
+        time.sleep(1)
+        return 99
     while True:
         clear()
         print("Choose a preset:")
@@ -209,17 +214,14 @@ main()
 #TODO make github (mention dpi button, offset of crosshair, AWP / Cycle) not for csp though
 #TODO make it able to be bound to right click maybe not for CSP but for myself / github
 #TODO test on multiple setup
+#TODO when choosing preset, make 99 go back (I think right now it goes hella far, we don't want that. Just like below)
+#TODO when you mess up the renaming or creating new preset, make it go back to choosing a new name instead of the home screen
 
 IMPORTANT
 #TODO make video (last, save time for this)
 #TODO make sure to understand things FOR CSP
-#TODO when editing preset make sure its not missing an entry or something.
-#TODO when choosing preset, make 99 go back (I think right now it goes hella far, we don't want that. Just like below)
-#TODO when you mess up the renaming or creating new preset, make it go back to choosing a new name instead of the home screen
-#TODO fix editing presets it's weird asf rn
-#TODO FIX EVERTHING I THINK I COOKED IT ITS LATE WITHOUT WIFI
-
-ngl atp not sure what state we are in been a long night
+#TODO fix editing and creating presets it's weird as
+#TODO make it so you can remove a key, you just can't save it with only one key
 
 if mouse.is_pressed("right"):
 Valid names: (maybe mention this (and valid key names) in the readme / pdf)
