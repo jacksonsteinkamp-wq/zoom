@@ -208,21 +208,21 @@ main()
 ''' NOTES
 
 #TODO add the option to choose which monitor (let user know that it is primary be default) IF WE HAVE TIME OFC, maybe not for CSP but for myself/github
-#TODO if we have time, make sure the user can only enter a number when asked for a number, and not a letter or something else that would cause an error. (If we have time ofc, maybe not for CSP but for myself)
-#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc maybe not for CSP but for myself/github)
-#TODO make github (mention dpi button, offset of crosshair, AWP / Cycle) not for csp though
+#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc maybe not for CSP but for myself/github) (Keyboard.wait('key') is global elite maybe for this!!)
+#TODO make github (mention dpi button, offset of crosshair, AWP / Cycle) not for csp though maybe
 #TODO make it able to be bound to right click maybe not for CSP but for myself / github
 #TODO test on multiple setup
-#TODO if we have time, just for me, make .exe
+#TODO if we have time, just for me/github, make .exe
 #TODO when choosing preset, make 99 go back (I think right now it goes hella far, we don't want that. Just like below)
 #TODO when you mess up the renaming or creating new preset, make it go back to choosing a new name instead of the home screen
 #TODO make it so you can remove a key even if you only have 1, you just can't save it with only one key
 
 Semi-Important
 #TODO code AWP and Toggle
+#TODO make abridged simple version for CSP
 
 IMPORTANT
-#TODO make video (last, save time for this)
+#TODO make video (last, save time for this) (reasoning)
 #TODO make sure to understand things FOR CSP
 
 if mouse.is_pressed("right"):
@@ -232,7 +232,5 @@ Valid names: (maybe mention this (and valid key names) in the readme / pdf)
 "middle"
 "x"
 "x2"
-
-\r replaces lines btw
 
 '''
