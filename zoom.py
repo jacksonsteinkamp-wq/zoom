@@ -15,8 +15,7 @@ SCREEN_WIDTH = user32.GetSystemMetrics(0)
 SCREEN_HEIGHT = user32.GetSystemMetrics(1)
 print("Finding Monitor Specs...")
 print("Screen Width: " + str(SCREEN_WIDTH) + "\nScreen Height: " + str(SCREEN_HEIGHT))
-time.sleep(1.5) #TODO expand on this
-
+time.sleep(1.5)
 def set_centered_zoom(zoom_level: float):
     visible_width = SCREEN_WIDTH / zoom_level
     visible_height = SCREEN_HEIGHT / zoom_level
