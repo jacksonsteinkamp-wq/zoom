@@ -87,5 +87,5 @@ def main(data):
         time.sleep(0.05)
 
 
-import presetanalyzer
-main(presetanalyzer.readpresetdata("Test | 2 (Hold : p : 1.25)(Hold : left : 1.25) <>"))
+#import presetanalyzer
+#main(presetanalyzer.readpresetdata("Test | 2 (Hold : p : 1.25)(Hold : left : 1.25) <>"))
