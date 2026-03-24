@@ -205,26 +205,5 @@ def main():
 
 main()
 
-''' NOTES
-
-#TODO make things onkeypress or something so the user doesnt have to hit enter (If we have time ofc maybe not for CSP but for myself/github) (Keyboard.wait('key') is global elite maybe for this!!)
-#TODO make github (mention dpi button, offset of crosshair, AWP / Cycle, the fact it uses main monitor,, valid mouse keys) not for csp though
-#TODO test on multiple setup
-#TODO if we have time, just for me/github, make .exe
-
-Semi-Important
-#TODO code AWP and Toggle
-#TODO make abridged simple version for CSP
-
-IMPORTANT
-#TODO make video (last, save time for this) (reasoning)
+#TODO make video
 #TODO make sure to understand things FOR CSP
-
-Valid names: (maybe mention this (and valid key names) in the readme / pdf)
-"left"
-"right"
-"middle"
-"x"
-"x2"
-
-'''

@@ -1,9 +1,12 @@
-# Center Zoom Magnifier
+# Center Zoom Magnifier 
 
-#TODO remove this section
-this is just for me and idrk why I did this I ofc wont turn it in. I will only turn in the launch.py
+## CSP CPT Requirements:
+I don't really know why I ~~made~~ had Claude make this file I of course wont turn it in. I will only turn in the launch.py. None of the things here are for the CSP CPT. I have all the requirements in launch.py. The user input is obvious. The update recent function has a list, iteration, and an if statement. There are more examples of each of these though.
 
-Basically the program zooms in on the center of the monitor using a Windows API ([MagSetFullscreenTransform](https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreentransform)). The user can set up settings so they can use multiple keys to zoom in at different multipliers, and can also save these settings. The goal of the program is to make it easier to inspect small on-screen details and improve accessibility for users who need larger text or visuals. It is a simple, customizable, open source program. The default Windows magnifier has multi-key hotkeys that are slow, clunky, and non-customizable, and the zoom isn't stationary (it moves with the mouse, which can be annoying). This program always zooms in on the center, since most content doesn't go all the way to the edges of the screen. (Think articles)
+---
+
+Basically the program zooms in on the center of the monitor using a Windows API ([MagSetFullscreenTransform](https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreentransform)). The user can set up settings so they can use multiple keys to zoom in at different multipliers, and can also save these settings. The goal of the program is to make it easier to inspect small on-screen details and improve accessibility for users who need larger text or visuals. It is a simple, customizable, open source program. The default Windows magnifier has multi-key hotkeys that are slow, clunky, and non-customizable, and the zoom isn't stationary (it moves with the mouse, which can be annoying). This program always zooms in on the center, since most content doesn't go all the way to the edges of the screen. (Think articles). The rest of this is irrelevant to the Performance Task.
+
 
 ---
 
@@ -11,13 +14,15 @@ Basically the program zooms in on the center of the monitor using a Windows API 
 
 Presets are stored in `presets.txt` in the following format:
 
-`name | keycount (Mode : key : zoom)(Mode : key : zoom) <>`
+```
+name | keycount (Mode : key : zoom)(Mode : key : zoom) <>
+```
 
 - `name` — the name of the preset
 - `keycount` — the number of key bindings
 - Each `(Mode : key : zoom)` defines one key binding
 - `<>` appears only on the most recently run preset 
-- For examples, check presets.txt
+- For examples, check `presets.txt`
 
 ---
 
@@ -29,7 +34,7 @@ Standard keyboard keys (e.g. `p`, `F5`) as well as mouse buttons:
 - `right`
 - `middle`
 - `x`
-- `x2` #TODO check which keys these are and list it here
+- `x2` #TODO check which keys these are and list it here (remove this comment)
 
 ---
 
@@ -43,13 +48,13 @@ Standard keyboard keys (e.g. `p`, `F5`) as well as mouse buttons:
 
 ## Monitor
 
-Currently this only supports the main monitor. If you want to zoom in on a different one, you will have to change your main monitor in the windows settings. It works no matter the resolution and scale. #TODO check this
+Currently this only supports the main monitor. If you want to zoom in on a different one, you will have to change your main monitor in the windows settings. It works no matter the resolution and scale. #TODO check this (remove this comment)
 
 ---
 ## Planned Features
 
 ### Key Enable/Disable Toggle
-A designated key will be able to toggle all zoom keys on or off within a preset session. When toggled off, zoom keys are ignored even if pressed. When toggled back on, they resume working normally. A visual and/or audio notification will play when toggling on or off so you always know the current state.
+A designated key will be able to toggle all or some zoom keys on or off within a preset session. When toggled off, zoom keys are ignored even if pressed. When toggled back on, they resume working normally. A visual and/or audio notification will play when toggling on or off so you always know the current state.
 
 ### Toggle Mode
 A key binding mode where pressing the key once zooms in and pressing it again returns to 1x, instead of requiring the key to be held.
@@ -58,7 +63,7 @@ A key binding mode where pressing the key once zooms in and pressing it again re
 A key binding mode that cycles through a list of zoom levels with each press (e.g. 1x → 2x → 3x → 1x). Useful for stepping through zoom levels without holding a key.
 
 ### Executable (.exe)
-Package the program as a standalone `.exe` so it can be run without a Python installation.
+Package the program as a  `.exe` so it can be run without Python and installing keyboard and mouse.
 
 ### Zoom Offset
 Change presets to have a custom offset, meaning the zoom isn't the center of the monitor.
@@ -78,3 +83,6 @@ Menu navigation currently requires pressing Enter after each input. The plan is 
 
 ### Multi Monitor Support
 The ability to use multiple monitors and choose which one you want to use on launch every time. Likely impossible.
+
+
+#TODO remove comments and the CPT part.
