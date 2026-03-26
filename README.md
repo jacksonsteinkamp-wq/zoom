@@ -86,3 +86,5 @@ The ability to use multiple monitors and choose which one you want to use on lau
 
 
 #TODO remove comments and the CPT part.
+#TODO make video
+#TODO be sure to understand code

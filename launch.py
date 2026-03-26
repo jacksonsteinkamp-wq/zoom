@@ -204,6 +204,3 @@ def main():
             continue
 
 main()
-
-#TODO make video
-#TODO make sure to understand things FOR CSP
