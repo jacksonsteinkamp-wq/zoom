@@ -204,3 +204,5 @@ def main():
             continue
 
 main()
+
+#TODO remove todos, add comments, make video
