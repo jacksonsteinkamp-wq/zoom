@@ -1,11 +1,9 @@
 import subprocess, sys, presetanalyzer, zoom, time, preseteditor
-global presetlist
-presetlist = []
 
 def clear():
-    print("\033[2J\033[H", end="") 
+    print("\033[2J\033[H", end="") #Claude told me that this clears the terminal by moving the cursor up and left. It doesnt work in the VSCode terminal
 
-def updaterecent(presetname):
+def updaterecent(presetname): #takes the parameter and adds the " <>" to the end of the preset with the same name as the parameter
     file = open("presets.txt", "r")
     lines = file.readlines()
     file.close()
@@ -16,12 +14,12 @@ def updaterecent(presetname):
         if name == presetname.strip():
             line = line.replace('\n', ' <>\n')
         writelines.append(line)
-    file = open("presets.txt", "w")
+    file = open("presets.txt", "w") #I had to look up to how write
     for line in writelines:
         file.write(line)
     file.close()
             
-def getpresets():
+def getpresets(): #Opens the presets folder and adds each line to a list
     global presetlist
     presetlist = []
     file = open("presets.txt", "r")
@@ -41,7 +39,7 @@ def chooseEdit():
     
     if action not in ['0', '1', '2', '3']:
         print("Invalid input, please enter a number from 0 to 3")
-        return chooseEdit()
+        return chooseEdit() #restarts
     
     if action == '0':
         clear()
@@ -49,23 +47,23 @@ def chooseEdit():
         
         if newpresetname != '0':
             getpresets()
-            repeat = False
-            SpecialChar = False
+            repeat = False #used to see if the new preset name is allowed
+            SpecialChar = False #used to see if the new preset name is allowed
             for preset in presetlist:
                 if newpresetname == preset.split('|')[0].strip():
                     repeat = True
             for i in newpresetname:
-                if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\':
+                if i == ',' or i == '<' or i == '>' or i == '|' or i == '(' or i == ')' or i == ':' or i == '\\': #would lowk break my analyzer
                     SpecialChar = True
             if repeat:
                 print("Presets cannot be repeats, please try again.")
-                time.sleep(1.5)
+                time.sleep(1.5) #these are all over so that the message can be read before it clears
             elif SpecialChar:
                 print("Presets cannot contain special characters, please try again.")
                 time.sleep(1.5)              
-            else:
+            else: #the preset name is not a repeat and doesnt use any of the special characters
                 new_preset_line = newpresetname + " | 0"
-                file = open("presets.txt", "a")
+                file = open("presets.txt", "a") #I had to look up how to write
                 file.write( new_preset_line)
                 file.close()
                 preseteditor.editpreset(new_preset_line)
@@ -93,7 +91,7 @@ def chooseEdit():
     
     elif action == '2':
         return choosepreset()
-    
+
     elif action == "3":
         print("Going back!")
         time.sleep(1.5)
@@ -176,14 +174,14 @@ def main():
                 print("Running preset: " + preset_to_run.split('|')[0] + '\nStarting! Hold Escape to Close.')
                 time.sleep(2)
                 updaterecent(preset_to_run.split('|')[0].strip())
-                zoom.main(presetanalyzer.readpresetdata(preset_to_run))
+                zoom.main(presetanalyzer.readpresetdata(preset_to_run)) #starts the preset
             else:
                 continue
             
         elif firstresult == '2':
             getpresets()
             Chosen_Preset_To_Edit = chooseEdit()
-            if Chosen_Preset_To_Edit == 99:
+            if Chosen_Preset_To_Edit == 99: #goes back
                 continue
             if Chosen_Preset_To_Edit != None:
                 clear()
@@ -191,9 +189,10 @@ def main():
                 time.sleep(2)
                 preseteditor.editpreset(Chosen_Preset_To_Edit)
             else:
-                continue
+                continue #also goes back
             
-        elif firstresult == '3':
+        elif firstresult == '3': #closes program
+            clear()
             print("Exiting...")
             time.sleep(1.5)
             exit()
@@ -201,8 +200,6 @@ def main():
         elif firstresult not in ['0', '1', '2', '3']:
             print("Invalid input, please enter a number from 0 to 3")
             time.sleep(2)
-            continue
+            continue #restarts
 
-main()
-
-#TODO remove todos, add comments, make video
+main() #This is a function so that way I can restart it if the user wants

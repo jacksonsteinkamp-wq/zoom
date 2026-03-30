@@ -4,6 +4,7 @@ from ctypes import wintypes
 import time
 import keyboard
 
+#Claude GENUINELY did all this ------------------------------------------------------
 magnification = ctypes.WinDLL("Magnification.dll")
 user32 = ctypes.windll.user32
 ctypes.windll.shcore.SetProcessDpiAwareness(2) 
@@ -37,7 +38,7 @@ def is_key_pressed(key):
     else:
         return keyboard.is_pressed(key)
 
-#CHAT ENDS
+#CLAUDE ENDS -------------------------------------------------------------------------------
 
 def clear():
     print("\033[2J\033[H", end="") 
@@ -47,11 +48,11 @@ def main(data):
     zoom_level = 1
     clear()
     print("Magnifier at 1x")
-    keys = data[2]
-    quit = 0
+    keys = data[2] #I had to look up how to do this
+    quit = 0 #I thought this was really smart, once this number reaches 60 the program closes and the number goes up .05 every 1/20th of a second if the user holds escape
     while True:
         pressed = False
-        for mode, key, zooms in keys:
+        for mode, key, zooms in keys: #I had to look up how to go through multiple lists like this
             if is_key_pressed(key):
                 if mode == "Hold":
                     if zoom_level != zooms[0]:
@@ -61,12 +62,13 @@ def main(data):
                         print("Magnifier at " + str(zoom_level) + "x")
                 elif mode == "Toggle" or mode == "AWP":
                     clear()
-                    print("Mode not available (Coming soon!)")
+                    print("Mode not available (Coming soon!)") #I don't have those made rn so it just does nothing. Really it shouldn't have let you make them yet
                 pressed = True
                 break
         if not pressed and zoom_level != 1:
             zoom_level = 1
             set_centered_zoom(zoom_level)
+            clear()
             print("Magnifier at 1x")
         if keyboard.is_pressed('ESC'):
             quit += 1
@@ -80,12 +82,8 @@ def main(data):
                 clear()
                 print("Exiting!")
             if quit == 60:
-                magnification.MagUninitialize()
+                magnification.MagUninitialize() #chatgpt explained this to me
                 exit()
         else:
             quit = 0
         time.sleep(0.05)
-
-
-#import presetanalyzer
-#main(presetanalyzer.readpresetdata("Test | 2 (Hold : p : 1.25)(Hold : left : 1.25) <>"))

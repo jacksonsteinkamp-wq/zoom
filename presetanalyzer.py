@@ -1,4 +1,4 @@
-def isolatekeys(chosenpreset):
+def isolatekeys(chosenpreset): #puts all the keys by themselves into a list
     charlist = list(chosenpreset.split('|')[1])
     charlist.pop(0)
     charlist.pop(0)
@@ -9,12 +9,13 @@ def isolatekeys(chosenpreset):
         keyslist[i] = keyslist[i].replace(')', '').replace('<', '').replace('>', '')
     return(keyslist)
     
-def importpresetlist():
+def importpresetlist(): #gets the presetlist because that function is in launch.py
     global presetlist
     presetlist = []
     presetlist = launch.getpresets() # type: ignore
     return
 
+#claude made this function
 def readpresetdata(preset):
     preset = preset.strip()
     name = preset.split('|')[0].strip()
@@ -32,11 +33,12 @@ def readpresetdata(preset):
         keys.append((mode.strip(), key.strip(), zoomlevels))
         keyno += 1
     return[name, int(numkeys), keys]
+#claude ends
 
-def clear():
+def clear(): #same clear it's just in the other file
     launch.clear() # type: ignore
     
-def choosepreset():
+def choosepreset(): #lists all presets and the user chooses one to run
     launch.getpresets() # type: ignore
     while True:
         clear()

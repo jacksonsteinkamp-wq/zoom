@@ -1,7 +1,7 @@
 # Center Zoom Magnifier 
 
 ## CSP CPT Requirements:
-I don't really know why I ~~made~~ had Claude make this file I of course wont turn it in. I will only turn in the launch.py. None of the things here are for the CSP CPT. I have all the requirements in launch.py. The user input is obvious. The update recent function has a list, iteration, and an if statement. There are more examples of each of these though.
+I don't really know why I ~~made~~ had Claude make this README I of course wont turn it in. I will only turn in the launch.py. None of the things here are for the CSP CPT. I have all the requirements in launch.py. The user input is obvious. The update recent function has a list, iteration, and an if statement. There are more examples of each of these though.
 
 ---
 
@@ -83,8 +83,3 @@ Menu navigation currently requires pressing Enter after each input. The plan is 
 
 ### Multi Monitor Support
 The ability to use multiple monitors and choose which one you want to use on launch every time. Likely impossible.
-
-
-#TODO remove comments and the CPT part.
-#TODO make video
-#TODO be sure to understand

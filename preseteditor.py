@@ -1,6 +1,6 @@
 import time
 
-def clear():
+def clear(): #CHATGPT told me that this fakes clearing the terminal and it does, just not the built in vscode one
     print("\033[2J\033[H", end="")
 
 def build_entry(entries):
@@ -165,19 +165,3 @@ def editpreset(preset_line):
         else: 
             print("Invalid Choice. Please try again")
             time.sleep(1.5)
-            
-def updaterecent(presetname):
-    file = open("presets.txt", "r")
-    lines = file.readlines()
-    file.close()
-    writelines = []
-    for line in lines:
-        name = line.split('|')[0].strip()
-        line = line.replace(' <>','')
-        if name == presetname.strip():
-            line = line.replace('\n', ' <>\n')
-        writelines.append(line)
-    file = open("presets.txt", "w")
-    for line in writelines:
-        file.write(line)
-    file.close()
