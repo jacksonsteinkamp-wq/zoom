@@ -7,7 +7,6 @@ I don't really know why I ~~made~~ had Claude make this README I of course wont 
 
 Basically the program zooms in on the center of the monitor using a Windows API ([MagSetFullscreenTransform](https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreentransform)). The user can set up settings so they can use multiple keys to zoom in at different multipliers, and can also save these settings. The goal of the program is to make it easier to inspect small on-screen details and improve accessibility for users who need larger text or visuals. It is a simple, customizable, open source program. The default Windows magnifier has multi-key hotkeys that are slow, clunky, and non-customizable, and the zoom isn't stationary (it moves with the mouse, which can be annoying). This program always zooms in on the center, since most content doesn't go all the way to the edges of the screen. (Think articles). The rest of this is irrelevant to the Performance Task.
 
-
 ---
 
 ## Preset Format
