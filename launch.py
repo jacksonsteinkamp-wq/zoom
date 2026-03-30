@@ -84,7 +84,7 @@ def chooseEdit():
         choice = choosepreset()
         if choice == 99: 
             return
-        presetlist.pop(choice)
+        presetlist.remove(choice)
         file = open("presets.txt", "w")
         for preset in presetlist:
             file.write(preset + "\n")
@@ -114,15 +114,15 @@ def choosepreset():
         for preset in presetlist:
             print(str(i) + " - " + preset.split('|')[0])
             i += 1
-        choice = int(input("Enter the number of your choice: \n"))
+        choice = int(input("Enter the number of your choice: \n"))  
         if type(choice) is not int:
             print("Invalid input — must be a number. Try again in a second.")
             time.sleep(1)
-            continue
+            continue      
         if choice == 99:
             print("Going Back...")
             time.sleep(1)
-            return 99
+            return 99      
         elif choice < 0 or choice >= len(presetlist):
             print("Choice out of range. Try again in a second.")
             time.sleep(1)
