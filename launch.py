@@ -28,7 +28,7 @@ def getpresets(): #Opens the presets folder and adds each line to a list
     file.close()
     return presetlist
     
-def chooseEdit():
+def chooseEdit():  # shows the edit menu and handles whichever action the user picks
     clear()
     print("Choose an action:")
     print("0 - Create new preset")
@@ -97,7 +97,7 @@ def chooseEdit():
         time.sleep(1.5)
         return 
     
-def choosepreset():
+def choosepreset():  # lists all presets and returns whichever one the user picks
     getpresets()
     if len(presetlist) == 0 :
         clear()
@@ -142,7 +142,7 @@ def main():
         print("3 - Exit")
         firstresult = input("Enter the number of your choice: \n") 
         
-        if firstresult == '0':
+        if firstresult == '0': # runs whatever preset has the <> marker
             found = False
             clear()
             print("Running previous setup...")
@@ -153,7 +153,7 @@ def main():
                         previous = preset 
                         print('Found Previous: ' + previous.split('|')[0] + '\nRunning Previous...' + '\nHold Escape to Quit!')
                         time.sleep(2)
-                        zoom.main(presetanalyzer.readpresetdata(previous))
+                        zoom.main(presetanalyzer.readpresetdata(previous)) # parse the preset and run it
                         found = True
                         break
                 if found:
@@ -174,7 +174,7 @@ def main():
                 print("Running preset: " + preset_to_run.split('|')[0] + '\nStarting! Hold Escape to Close.')
                 time.sleep(2)
                 updaterecent(preset_to_run.split('|')[0].strip())
-                zoom.main(presetanalyzer.readpresetdata(preset_to_run)) #starts the preset
+                zoom.main(presetanalyzer.readpresetdata(preset_to_run)) # parse the preset and run it
             else:
                 continue
             
@@ -187,7 +187,7 @@ def main():
                 clear()
                 print("Editing preset: " + Chosen_Preset_To_Edit.split('|')[0])
                 time.sleep(2)
-                preseteditor.editpreset(Chosen_Preset_To_Edit)
+                preseteditor.editpreset(Chosen_Preset_To_Edit)  # hand off to the editor
             else:
                 continue #also goes back
             

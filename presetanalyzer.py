@@ -1,4 +1,4 @@
-def isolatekeys(chosenpreset): #puts all the keys by themselves into a list
+def isolatekeys(chosenpreset): #puts all the keys by themselves into a list and strips away the rest
     charlist = list(chosenpreset.split('|')[1])
     charlist.pop(0)
     charlist.pop(0)

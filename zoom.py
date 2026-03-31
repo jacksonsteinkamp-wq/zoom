@@ -65,8 +65,8 @@ def main(data):
                     print("Mode not available (Coming soon!)") #I don't have those made rn so it just does nothing. Really it shouldn't have let you make them yet
                 pressed = True
                 break
-        if not pressed and zoom_level != 1:
-            zoom_level = 1
+        if not pressed and zoom_level != 1: # if nothing is pressed and we're zoomed in, go back to 1x
+            zoom_level = 1 
             set_centered_zoom(zoom_level)
             clear()
             print("Magnifier at 1x")
