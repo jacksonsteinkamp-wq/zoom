@@ -3,10 +3,8 @@ import subprocess, sys, presetanalyzer, zoom, time, preseteditor
 def clear():
     print("\033[2J\033[H", end="") #Claude told me that this clears the terminal by moving the cursor up and left. It doesnt work in the VSCode terminal
 
-def updaterecent(presetname): #takes the parameter and adds the " <>" to the end of the preset with the same name as the parameter
-    file = open("presets.txt", "r")
-    lines = file.readlines()
-    file.close()
+def updaterecent(presetname): #adds the " <>" to the most recent preset and removes it from the rest
+    lines = getpresets()
     writelines = []
     for line in lines:
         name = line.split('|')[0].strip()
@@ -14,12 +12,12 @@ def updaterecent(presetname): #takes the parameter and adds the " <>" to the end
         if name == presetname.strip():
             line = line.replace('\n', ' <>\n')
         writelines.append(line)
-    file = open("presets.txt", "w") #I had to look up to how write
+    file = open("presets.txt", "w")
     for line in writelines:
         file.write(line)
     file.close()
             
-def getpresets(): #Opens the presets folder and adds each line to a list
+def getpresets(): #gets list of all presets
     global presetlist
     presetlist = []
     file = open("presets.txt", "r")
@@ -97,7 +95,7 @@ def chooseEdit():  # shows the edit menu and handles whichever action the user p
         time.sleep(1.5)
         return 
     
-def choosepreset():  # lists all presets and returns whichever one the user picks
+def choosepreset():
     getpresets()
     if len(presetlist) == 0 :
         clear()
@@ -174,7 +172,7 @@ def main():
                 print("Running preset: " + preset_to_run.split('|')[0] + '\nStarting! Hold Escape to Close.')
                 time.sleep(2)
                 updaterecent(preset_to_run.split('|')[0].strip())
-                zoom.main(presetanalyzer.readpresetdata(preset_to_run)) # parse the preset and run it
+                zoom.main(presetanalyzer.readpresetdata(preset_to_run))
             else:
                 continue
             

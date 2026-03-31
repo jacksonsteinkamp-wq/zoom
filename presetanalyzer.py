@@ -37,28 +37,3 @@ def readpresetdata(preset):
 
 def clear(): #same clear it's just in the other file
     launch.clear() # type: ignore
-    
-def choosepreset(): #lists all presets and the user chooses one to run
-    launch.getpresets() # type: ignore
-    while True:
-        clear()
-        print("Choose a preset:")
-        i = 0
-        print('99 - Go Back')
-        for preset in presetlist:
-            print(str(i) + " - " + preset.split('|')[0])
-            i += 1
-        choice = int(input("Enter the number of your choice: \n"))
-        if type(choice) is not int:
-            print("Invalid input — must be a number. Try again in a second.")
-            time.sleep(1) # type: ignore
-            continue
-        if choice == 99:
-            print("Going Back...")
-            time.sleep(1) # type: ignore
-            return 99
-        elif choice < 0 or choice >= len(presetlist):
-            print("Choice out of range. Try again in a second.")
-            time.sleep(1) # type: ignore
-            continue
-        return presetlist[choice]
